@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="311.038" height="311.038" viewBox="0 0 311.038 311.038">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1466" data-name="Rectangle 1466" width="150" height="150" transform="translate(855 350)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Group_230" data-name="Group 230" transform="translate(-1526 -209)">
+    <circle id="Ellipse_7" data-name="Ellipse 7" cx="155.519" cy="155.519" r="155.519" transform="translate(1526 209)" fill="#eceff1"/>
+    <g id="Mask_Group_13" data-name="Mask Group 13" transform="translate(752 -60)" clip-path="url(#clip-path)">
+      <path id="book-solid" d="M131.25,98.438V14.063A14.064,14.064,0,0,0,117.188,0H28.125A28.125,28.125,0,0,0,0,28.125v93.75A28.125,28.125,0,0,0,28.125,150h93.75a9.1,9.1,0,0,0,4.688-17.051V109.113A14.907,14.907,0,0,0,131.25,98.438ZM41.924,37.5h56.25a4.765,4.765,0,0,1,4.951,4.688,4.7,4.7,0,0,1-4.687,4.688H41.924a4.7,4.7,0,0,1,0-9.375Zm0,18.75h56.25a4.765,4.765,0,0,1,4.951,4.688,4.7,4.7,0,0,1-4.687,4.687H41.924a4.7,4.7,0,0,1,0-9.375Zm70.576,75H28.125a9.375,9.375,0,1,1,0-18.75H112.5Z" transform="translate(864.375 350)" fill="#207abf"/>
+    </g>
+  </g>
+</svg>

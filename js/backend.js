@@ -1,3 +1,389 @@
+/* the custom jQuery code here */
+
+// initialize var
+var limit = 20;
+var start = 0;
+var load_status = 'inactive';
+var currentFocus = -1;
+
+
+//login.php  && signup.php
+// for Hide and Show the password by using the EYE icons
+function hidePassword(target) {
+    var input = document.getElementById(target);
+
+    if (input.type === 'password') {
+        input.type = "text";
+        $("#hide").addClass("fa-eye-slash").removeClass("fa-eye");
+    } else {
+        input.type = "password";
+        $("#hide").addClass("fa-eye").removeClass("fa-eye-slash");
+    }
+}
+//search form 
+//to check if at least one filed is not empty
+function searchFormCheck() {
+    var count = 0;
+    //check from all input type of it is text
+    $('#search_form input[type=text]').each(function() {
+        if ($(this).val()) {
+            count++;
+            return false;
+        }
+    });
+    if (count > 0) {
+        $('#search_form').attr('action', 'search_result.php');
+        $('#submit').attr('type', 'submit');
+    } else {
+        // check from the input of type date
+        if ($('#search_publish_date').val()) {
+            $('#search_form').attr('action', 'search_result.php');
+            $('#submit').attr('type', 'submit');
+        } else {
+            window.location.href = "#advance_title";
+            $('#all_field_empty').fadeIn(2500);
+        }
+    }
+}
+
+// to get more section from database and append it to the page
+// { limit: limit, start: start, type: type , section_id: section_id}
+function loadSection(url, container, options) {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: Object.assign({ limit: limit, start: start }, options),
+        cache: false,
+        beforeSend: function() {
+            // to show loading icon
+            $('.load_more_scroll_loader').removeClass("d-none");
+        },
+        success: function(response) {
+            // to add the response to the page
+            $("#" + container).append(response);
+            // to hide loading icon
+            $('.load_more_scroll_loader').addClass("d-none");
+
+            // check if there is more categories on not
+            load_status = response == '' ? "active" : "inactive";
+
+            // display message if no data
+            if ((response == '') && (start == 0)) {
+                errorMessage(container, options.section);
+            }
+        },
+        error: function(response) {
+            // do some thing
+        }
+    });
+}
+
+// display message if no data found
+function errorMessage(container, param) {
+    message = '<div class="container text-center" ><h1 class="mb-0 pb-0 pt-5 text-muted">';
+    message += isNaN(param) ? 'لا يوجد نتائج فيما تبحث عنه !!' : 'لا يوجد كتب !!';
+    message += '</h1><img src="img/No_data.svg" class="img-fluid w-75 w" /></div>';
+    $("#" + container).html(message);
+}
+
+// to load more data on scroll event only if there is more category in database
+function scrollLoader(url, container, option) {
+
+    if ($(window).scrollTop() >= $(document).height() - $(window).height() && load_status == 'inactive') {
+        load_status = 'active';
+        start = start + limit;
+        loadSection(url, container, option);
+    }
+}
+
+// for delete popup param
+// {"id":"$cat_id", "img":"$auth_img"}
+function deletePop(url, options) {
+    // get the id
+    delete_id = "id=" + options['id'];
+
+    // get the img if exist
+    if (options['img']) {
+        delete_img = "&img=" + options['img'];
+        $("#delete_btn").attr("onclick", "window.location.href='" + url + "?" + delete_id + delete_img + "'");
+    } else {
+        $("#delete_btn").attr("onclick", "window.location.href='" + url + "?" + delete_id + "'");
+    }
+}
+
+// to search for any thing : author , publisher and category
+function search(searchText, url, options) {
+
+    if (searchText != '') {
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: options,
+            cache: false,
+            beforeSend: function() {
+                // to show loading icon
+                // old icon : // fa-circle-notch
+                $("#search_icon").addClass('fa-spinner-third fa-spin').removeClass('fa-magnifying-glass');
+            },
+            success: function(response) {
+                // to add the response to the page
+                $('#result_list').html(response);
+                // to hide loading icon
+                $("#search_icon").addClass('fa-magnifying-glass').removeClass('fa-spinner-third fa-spin');
+                // to reset the current focus suggestion item
+                currentFocus = -1;
+            },
+            error: function(response) {
+                // handel error
+            }
+
+        });
+    } else {
+        $('#result_list').html('');
+    }
+
+}
+
+// to display redirect seconds
+function myTimer(url) {
+    --second;
+    $('#second').text(second);
+    if (second === 0) {
+        clearInterval(redirectTime);
+        if (url) window.location.href = url;
+    }
+}
+
+// to call function only when page loaded
+$(document).ready(function() {
+    // make the width of search result equal to search input
+    $('#result_list').width($('.search').width());
+
+    // hide search result
+    $("#search_txt").blur(function() {
+        setTimeout(function() {
+            $('#result_list').hide();
+        }, 200);
+    });
+
+    // show search result
+    $("#search_txt").focus(function() {
+        $('#result_list').show();
+    });
+
+    // for click rating star style
+    $(".rate").click(function() {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+
+    // to navigate search suggestion using arrow key
+    $("#search_txt").keydown(function(e) {
+        switch (e.key) {
+            case "ArrowDown":
+                Navigate(1);
+                break;
+            case "ArrowUp":
+                Navigate(-1);
+                break;
+            case "Enter":
+                if ($("#result_list .active").length) {
+                    e.preventDefault();
+                    $("#result_list .active")[0].click();
+                }
+                break;
+            default:
+                return; // exit this handler for other keys
+        }
+    });
+
+    // for suggestion navigation
+    var Navigate = function(diff) {
+        currentFocus += diff;
+        var listItems = $(".search-item");
+
+        if (currentFocus >= listItems.length) {
+            currentFocus = 0;
+        }
+        if (currentFocus < 0) {
+            currentFocus = listItems.length - 1;
+        }
+
+        // not eq(index) start index form 0
+        listItems.removeClass("active").eq(currentFocus).addClass("active");
+    };
+
+    // to fill input with value when click edit for category popup
+    $(document).on("click", ".cat-edit", function(e) {
+
+        // get cat name and id
+        var cat_id = $(this).attr("cat-data");
+        var cat_name = $(this).parents("ul").prev().attr("title");
+
+        // set cat name and cat id to input filed in popup
+        $("#cat_id").val(cat_id);
+        $("#cat_name").val(cat_name);
+
+        // for edit event
+        $("#cat_name").attr("onkeyup", "checkName('check_cat.php', {cat_name: $(this).val()}, $(this), '" + cat_name + "')");
+
+        // change popup title and save btn
+        $("#add_category_label").text("تعديل قسم");
+        $('#add_category input:submit').val("تعديل");
+    });
+
+    // to rest category edit filed when click (x) btn
+    $("#add_category").on('hidden.bs.modal', function() {
+        $("#catForm").get(0).reset();
+        // change popup title and save btn
+        $("#add_category_label").text("إضافة قسم");
+        $('#add_category input:submit').val("إضافة");
+        // enable disable btn
+        $("#catForm input:submit").prop("disabled", false);
+
+        // for remove edit event
+        $("#cat_name").attr("onkeyup", "checkName('check_cat.php', {cat_name: $(this).val()}, $(this))");
+    });
+
+    // to rest all filed including hidden filed 
+    $('#add_category').on('reset', function() {
+        $("#add_category #cat_id").val('');
+        $("#add_category #cat_name").removeClass("is-invalid");
+    });
+
+    //to check form checkbooks in signup 
+    $("#checkbox").change(function() {
+        if (this.checked) {
+            $('#check_agree').text("");
+        } else {
+            $('#check_agree').text("not agree");
+        }
+    });
+    //to check the error message
+    $(document).on("DOMSubtreeModified", ".invalid-feedback", function() {
+        var count = 0;
+        $(".invalid-feedback").each(function() {
+            if ($(this).text().length != 0) {
+                count++;
+                return;
+            }
+        });
+        if (count > 0) {
+            $('#submit').prop('disabled', true);
+        } else {
+            $('#submit').prop('disabled', false);
+        }
+    });
+
+    //to read more in book_details page
+    $('.more-btn').click(function() {
+        $('.more-btn').hide();
+        $('.more-text').show();
+        $('.dots').css('display', 'none');
+        $('.less-btn').show();
+    });
+    $('.less-btn').click(function() {
+        $('.more-text').hide();
+        $('.more-btn').show();
+        $('.dots').fadeIn();
+        $('.less-btn').hide();
+    });
+
+    //add book page
+    //to show series detail
+    $("#checkbox_has_series").change(function() {
+        if (this.checked) {
+            $('.series-group').show(500);
+        } else {
+            $('.series-group').hide(500);
+        }
+    });
+    //to show  attachment details
+
+    $("#checkbox_has_attachment").change(function() {
+        if (this.checked) {
+            $('.attachment-group').show(500);
+        } else {
+            $('.attachment-group').hide(500);
+        }
+    });
+    $('input[type=radio][name=chose_part]').change(function() {
+
+        if (this.value == 'one') {
+            $('.one-part-container').show(500);
+            $('.multi-part-container').hide(500);
+            $('#part_no').val("");
+            $('#more_part').html("");
+            $('.one-part-container input').each(function() {
+                $(this).prop("disabled", false);
+                $(this).prop("required", true);
+
+            });
+        } else {
+            $('.multi-part-container').show(500);
+            $('.one-part-container').hide(500);
+            $('.one-part-container input').each(function() {
+                $(this).prop("disabled", true);
+                $(this).prop("required", false);
+            });
+        }
+    });
+
+
+});
+// ************** upload page *********************
+
+//show alert message function
+function show_alert(message, alert) {
+    $('#alert_wrapper').html(
+        '<div class="alert alert-' + alert + ' alert-dismissible fade show" role="alert" >' +
+        '<span>' + message + '</span>' +
+        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button></div>'
+    );
+};
+
+// to check file extension
+function validate_file(bookName) {
+    // allowed book extension
+    var allowExtension = ['pdf', 'doc', 'docx'];
+    // to get the book extension
+    var bookExtension = bookName.split('.').pop().toLowerCase();
+
+    //to check if the chosen file is in the allowed list or not
+    if (!(allowExtension.includes(bookExtension))) {
+        // display error message and disable upload button and rest input
+        show_alert("عذراً, غير مسموح برفع ملفات عدا :" + allowExtension.join(', '), "warning");
+        $("#upload_btn").prop("disabled", true);
+        $('#fileToUpload').val('');
+
+        // to exit from the method
+        return false;
+    }
+    // remove error message and enable submit btn
+    $("#alert_wrapper").html('');
+    $("#upload_btn").prop("disabled", false);
+    // go to check if file exist in server
+    checkBookExist(bookName);
+}
+
+//check book if exist in server before uploading
+function checkBookExist(bookName) {
+    $.ajax({
+        type: "HEAD",
+        url: "upload/pdf/" + bookName,
+        error: function() {
+            //file not exists
+            $("#alert_wrapper").html('');
+            $("#upload_btn").prop("disabled", false);
+        },
+        success: function() {
+            //file exists
+            show_alert("الكتاب موجود مسبقاً..!", "danger");
+            $("#upload_btn").prop("disabled", true);
+            $('#fileToUpload').val('');
+        }
+    });
+}
+
 //check author photo if exist in server before uploading
 function checkFileExist(filed, type) {
     // allowed book extension

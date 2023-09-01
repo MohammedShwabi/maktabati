@@ -572,3 +572,661 @@ nav {
 }
 
 /*********** end of loading icon *******************/
+/************** start of search  ***********/
+
+.search {
+    position: relative;
+}
+
+.search #search_txt {
+    height: 60px;
+    text-indent: 25px;
+    border: 2px solid #d6d4d4;
+}
+
+.search #search_txt:focus {
+    box-shadow: none;
+    border: 2px solid var(--blue-color);
+}
+
+#search_icon {
+    color: var(--blue-color);
+    font-size: 20px;
+    position: absolute;
+    top: 22px;
+    right: 10px;
+}
+
+#search_btn {
+    height: 50px;
+    width: 110px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: var(--blue-color);
+}
+
+/* float search result  */
+
+#result_list {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/*when navigating through the items using the arrow keys:*/
+
+#result_list.active {
+    background-color: var(--blue-color) !important;
+    color: #ffffff;
+}
+
+/****************** end of search  ****************/
+/************ Start style of Add Bottom ***********/
+
+.add-btn {
+    background-color: var(--blue-color);
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.5rem;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 1px 1px lightgray;
+}
+
+.add-btn-small {
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    display: none;
+}
+
+.add-btn-big {
+    height: 45px;
+}
+
+@media (max-width: 1000px) {
+    .add-btn-big {
+        display: none;
+    }
+
+    .add-btn-small {
+        display: inline-block;
+    }
+}
+
+.btn-line {
+    border-left: 2px solid rgb(255, 255, 255);
+    height: 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.add-btn-div {
+    position: fixed;
+    bottom: 20vh;
+    right: 5vw;
+}
+
+/************ End style of Add Bottom ************/
+/********************** start of categories style  **************/
+
+.container-site {
+    margin-top: 20px;
+    max-width: 1230px;
+    padding-right: 25px;
+    padding-left: 25px;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.views-row {
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+    margin-bottom: 16px !important
+}
+
+.book-box {
+    margin-bottom: 30px
+}
+
+.category-box {
+    background-color: white;
+    padding: 1rem;
+    height: 100%;
+    position: relative;
+    margin-bottom: 30px;
+    transition: .3s all
+}
+
+.category-box .book-result {
+    margin-top: 2rem;
+}
+
+.category-box .book-result h3 {
+    text-align: center;
+    font-size: 17px;
+    color: #202C53;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.category-box .book-result p {
+    color: #202C53;
+    text-align: center;
+    font-size: 14px;
+    line-height: 14px
+}
+
+.category-box:hover,
+.book-box .book-teaser:hover {
+    border-color: var(--blue-color) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1)
+}
+
+/***************** end of categories style  *************/
+/***************** start of author style  *************/
+
+.category-box .book-result .writer-avatar {
+    max-width: 80px;
+    margin: 0 auto 10px auto
+}
+
+.media-object {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #dadde1;
+    padding: 1px;
+    border-radius: 50%
+}
+
+/************ end of author style  ************/
+/*************** start style for book rating star ***************/
+
+.full-stars {
+    color: var(--yellow-color);
+}
+
+.empty-stars {
+    color: #7F7F7F;
+}
+
+/********************** style for action link ************************/
+
+.book-links {
+    width: 145px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transition: all 0.4s ease 0s;
+}
+
+.book-teaser:hover .book-links,
+.category-box:hover .book-links {
+    opacity: 1;
+    top: 50%;
+}
+
+.book-links li {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.book-links li a {
+    background: #fff;
+    font-size: 16px;
+    line-height: 42px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    display: block;
+    position: relative;
+    transition: all 0.4s ease-out 0s;
+}
+
+.book-links li a:hover {
+    box-shadow: 1px 1px 30px 0 rgba(0, 0, 0, 0.2);
+}
+
+.book-links li a .fa-pen {
+    color: var(--blue-color);
+}
+
+.book-links li a .fa-trash {
+    color: red;
+}
+
+.book-links li a:hover .fa-pen {
+    color: white;
+}
+
+.book-links li a:hover .fa-trash {
+    color: white;
+}
+
+.book-links li #edit_icon:hover {
+    background: var(--blue-color);
+}
+
+.book-links li #delete_icon:hover {
+    background: red;
+}
+
+.book-links li a:before,
+.book-links li a:after {
+    content: attr(data-tip);
+    color: #fff;
+    background-color: #555;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    display: none;
+    transform: translateX(-50%);
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    transition: all 0.3s ease 0s;
+}
+
+.book-links li a:after {
+    content: '';
+    height: 10px;
+    width: 10px;
+    padding: 0;
+    transform: translateX(-50%) rotate(45deg);
+    top: -18px;
+    z-index: -1;
+}
+
+.book-links li a:hover:before,
+.book-links li a:hover:after {
+    display: block;
+}
+
+/*************** start style for book card ***************/
+/**************** book card  ***************************/
+
+.book-box .book-teaser {
+    padding: 15px;
+    transform: translateY(0);
+    transition: .3s all .2s cubic-bezier(0.4, 0, .2, 1)
+}
+
+.book-box .book-teaser .book-image img {
+    margin: 0 auto;
+    max-height: 200px
+}
+
+.book-box .book-teaser .book-title a {
+    color: var(--dark-blue-color);
+    font-weight: bold;
+}
+
+.book-box .book-teaser .author-label a {
+    color: var(--blue-color);
+    font-weight: bold;
+}
+
+.rating-favorites {
+    max-width: 168px;
+    margin: .5rem 5px 0 5px;
+}
+
+.book-teaser .rating-favorites {
+    margin: .5rem auto 0 !important
+}
+
+.rating {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+    line-height: 15px
+}
+
+/********************** site feature section ************/
+
+.feature-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.feature-box p {
+    font-size: 15px;
+}
+
+#feature>div:nth-child(1)>.feature-box {
+    background-color: #207ABF;
+}
+
+#feature>div:nth-child(2)>.feature-box {
+    background-color: #4EC2ED;
+}
+
+#feature>div:nth-child(3)>.feature-box {
+    background-color: #F9B13B;
+}
+
+#feature>div:nth-child(4)>.feature-box {
+    background-color: #202C53;
+}
+
+/*********************** for author page tittle and breadcrumb **************/
+
+.article-header {
+    background-color: rgba(78, 194, 237, 0.2);
+    position: relative;
+    padding: 2.5rem 0;
+    margin-bottom: 1rem
+}
+
+.article-header .title-page {
+    font-size: 18px;
+    margin-bottom: 1rem;
+    color: #202C53;
+    font-weight: bold;
+}
+
+.article-header .breadcrumb li,
+.article-header .breadcrumb li a.active {
+    color: #202C53;
+    font-size: 16px;
+}
+
+.article-header .breadcrumb li a {
+    color: #207ABF;
+    text-decoration: none;
+}
+
+@media(max-width:768px) {
+    .article-header {
+        padding: 1rem 0 1rem 0
+    }
+}
+
+.article-header .breadcrumb>li+li:before {
+    padding: 0 4px;
+    color: #333;
+    content: "/\00a0"
+}
+
+/*********************** for author detail **************/
+
+.author-heading {
+    font-size: 25px;
+    margin-bottom: 1rem;
+    color: #207ABF;
+}
+
+.author-body {
+    flex: 1;
+}
+
+.author-body p {
+    color: #202C53;
+    font-size: 14px;
+}
+
+@media(max-width:768px) {
+    .author-img {
+        width: 50px;
+        height: 50px
+    }
+
+    .author-detail {
+        display: block !important
+    }
+}
+
+/****************** style for delete popup *****************/
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: #484848;
+}
+
+#del_pop .modal-body p,
+#no_del_pop .modal-body p {
+    font-size: large;
+}
+
+/****************** style for rating popup *****************/
+
+.stars {
+    direction: ltr;
+    color: #7F7F7F;
+}
+
+/* to colorize the star and its next star sibling */
+
+.stars .rate:hover,
+.stars .rate.active,
+.stars .rate:hover~.rate,
+.stars .rate.active~.rate {
+    color: #f8ac09;
+}
+
+.rate {
+    height: 50px;
+    margin-left: -5px;
+    padding: 5px;
+    font-size: 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+.rate input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* to add emoji */
+
+.rate:nth-child(5) .face::after {
+    content: "\f119";
+    /* ☹ */
+}
+
+.rate:nth-child(4) .face::after {
+    content: "\f11a";
+    /* 😐 */
+}
+
+.rate:nth-child(3) .face::after {
+    content: "\f118";
+    /* 🙂 */
+}
+
+.rate:nth-child(2) .face::after {
+    content: "\f580";
+    /* 😊 */
+}
+
+.rate:nth-child(1) .face::after {
+    content: "\f59a";
+    /* 😄 */
+}
+
+.face {
+    opacity: 0;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: var(--light-blue-color);
+    border-radius: 5px;
+    top: -50px;
+    left: 2px;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.face::before {
+    font: var(--fa-font-solid);
+    font-weight: 900;
+    content: "\f0dd";
+    display: inline-block;
+    color: var(--light-blue-color);
+    z-index: 1;
+    position: absolute;
+    left: 9px;
+    bottom: -8px;
+}
+
+.face::after {
+    font: var(--fa-font-solid);
+    font-weight: 900;
+    display: inline-block;
+    color: #fff;
+    z-index: 1;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.rate:hover .face {
+    opacity: 1;
+}
+
+/* Makes the emoji stay displayed */
+
+input[type="radio"]:checked+.face {
+    opacity: 1 !important;
+}
+
+/****************** end for rating popup *****************/
+/****************** star for add category popup *****************/
+
+.pop-title {
+    color: var(--blue-color);
+    font-weight: bold;
+    font-size: 28px;
+    text-align: center;
+    width: 460px;
+}
+
+.category-name {
+    color: var(--blue-color);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/****************** end for add category popup *****************/
+
+#add_author_title,
+#add_book_title {
+    color: var(--blue-color);
+}
+
+#add_author_title svg {
+    color: var(--blue-color);
+    width: 30px;
+    height: 30px;
+    fill: var(--blue-color);
+    margin-top: -7px;
+}
+
+#add_author input.form-control,
+#add_author select,
+#add_author textarea {
+    background-color: var(--input-color);
+    border: 0.5px solid #E3E8F0;
+}
+
+#add_author input:focus,
+#add_author select:focus,
+#add_author textarea:focus {
+    box-shadow: 0 0 0 1.5px var(--blue-color);
+}
+
+#add_author input.is-invalid {
+    box-shadow: 0 0 0 1.5px var(--red-color);
+}
+
+#add_author input.is-valid {
+    box-shadow: 0 0 0 1.5px #198754;
+}
+
+/* start of add author img */
+
+.profile-upload {
+    --profile-size: 170px;
+    position: relative;
+}
+
+#profile_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--profile-size);
+    border: 2px solid var(--blue-color);
+}
+
+.profile-container {
+    width: var(--profile-size);
+    height: var(--profile-size);
+    border-radius: var(--profile-size);
+    overflow: hidden;
+    border: 2px solid #fff;
+}
+
+.camera-icon {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    --camera-size: 55px;
+    width: var(--camera-size);
+    height: var(--camera-size);
+    font-size: 45px;
+    color: var(--dark-blue-color);
+    background-color: var(--light-blue-color);
+    border: 2px solid var(--dark-blue-color);
+    border-radius: var(--camera-size);
+}
+
+/*********************** for author detail **************/
+
+#add_book input.form-control,
+#add_book select,
+#add_book textarea {
+    background-color: var(--input-color);
+    border: 0.5px solid #E3E8F0;
+}
+
+#add_book input:focus,
+#add_book select:focus,
+#add_book textarea:focus {
+    box-shadow: 0 0 0 1.5px var(--blue-color);
+}
+
+#add_book .series-group,
+#add_book .attachment-group,
+#add_book .multi-part-container {
+    display: none;
+}
+
+/* #add_book .chose-how-part .form-check {
+    display: inline; 
+     /background-color: #198754;
+} */
+/*********************** for accordion icon **************/
+.accordion-button:after {
+    order: -1;
+    margin-left: 1.5em;
+    margin-top: -1em;
+}
