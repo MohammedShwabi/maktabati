@@ -1,0 +1,574 @@
+/* the custom web style here */
+
+:root {
+    --yellow-color: #F9B13B;
+    --light-blue-color: #4EC2ED;
+    --dark-blue-color: #202C53;
+    --blue-color: #207ABF;
+    --red-color: #f02f2e;
+    --input-color: #F0F2F7;
+    --input-txt-color: #676666;
+}
+
+body {
+    font-family: "Almarai", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: .5px;
+    padding: 0;
+    margin: 0;
+    background-color: #f5f4f4;
+    text-align: right
+}
+
+.blue-text {
+    color: var(--blue-color);
+    font-weight: bold;
+}
+
+.dark-blue-text {
+    color: var(--dark-blue-color);
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+/************** Start header.php **************/
+
+nav {
+    box-shadow: 3px #207ABF;
+}
+
+.navbar {
+    padding-bottom: 0;
+}
+
+.navbar-light .navbar-nav {
+    position: relative;
+}
+
+/* margin between all nav items */
+
+.navbar .navbar-nav .nav-item {
+    margin: 0 20px;
+}
+
+/* this for p tag in navbar */
+
+.nav-item .nav-text {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--dark-blue-color);
+}
+
+/* color when hover on nav item */
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--blue-color);
+}
+
+/* color when click in nav item that make it active item */
+
+.navbar-light .navbar-nav .active .nav-link {
+    color: var(--blue-color);
+}
+
+/* to put underline on active item */
+
+.navbar-light .navbar-nav .active {
+    border-bottom: 2px solid var(--blue-color);
+    content: "";
+    display: block;
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+/* style of btn link */
+
+.navbar-light .btn {
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* style of login btn link */
+
+.navbar-light .loginbtn {
+    background-color: var(--blue-color);
+    color: #FFF;
+}
+
+/* style of  login btn link on hover */
+
+.navbar-light .loginbtn:hover {
+    background-color: #FFF;
+    color: var(--blue-color);
+    border: 1px solid var(--blue-color);
+}
+
+.navbar-light .logoutbtn:hover {
+    background-color: #FFF;
+    color: red;
+    border: 1px solid red;
+}
+
+/* to make margin in small screen */
+
+@media (max-width: 767px) {
+    .collapse .btn {
+        margin-bottom: 20px;
+    }
+
+    .navbar-light .navbar-nav .active {
+        margin: auto;
+    }
+}
+
+/* ***************logo svg  ****************/
+
+.nav-icon .nav-item a .icon svg {
+    max-width: 100%;
+    height: auto;
+}
+
+#Layer_1 {
+    max-width: 100%;
+    height: auto;
+}
+
+.nav-icon li a {
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 .1rem;
+    color: #222
+}
+
+.nav-icon li a .icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 7px;
+}
+
+.nav-icon li a .icon svg path {
+    fill: #222;
+}
+
+.nav-icon li.active a svg path {
+    border-bottom: 2px solid var(--blue-color);
+    content: "";
+    display: block;
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+.nav-icon li.active a svg path,
+.nav-icon li:hover a svg path,
+.nav-icon li:focus a svg path {
+    fill: #207ABF;
+}
+
+/* ***************logo svg  ****************/
+/************** end header.php **************/
+/************** start login.php & signUp.php **************/
+
+.login-page {
+    height: 100%;
+    width: 100%;
+    padding-bottom: 7%;
+    background-image: url('../img/background.png');
+}
+
+.signup-page {
+    background-image: url('../img/background.png');
+}
+
+/* Start form */
+
+.blue-btn {
+    background-color: var(--blue-color);
+    font-weight: bold;
+    color: #FFF;
+    font-size: 20px;
+}
+
+.blue-btn:hover {
+    color: #FFF;
+}
+
+@media (min-width:767px) {
+    .all-form .form-control {
+        width: 350px !important;
+    }
+
+    .all-form .d-grid .btn {
+        width: 95% !important;
+    }
+}
+
+/* on test  */
+
+.all-form .form-check-input {
+    margin: 0px 10px 10px 0px;
+    color: var(--blue-color);
+}
+
+.all-form .form-check-label {
+    margin: 0px 0px 10px 0px;
+    padding-right: 5px;
+    color: var(--dark-blue-color);
+    font-weight: bold;
+}
+
+/*  */
+
+.all-form .form-label {
+    margin: 3px -18px 0px 0px;
+    padding-right: 32px;
+    color: var(--dark-blue-color);
+    font-weight: bold;
+}
+
+.all-form .form-control {
+    width: 100%;
+    margin: 5px 10px 10px 10px;
+    padding-right: 35px;
+    color: var(--dark-blue-color);
+}
+
+.all-form .f-username {
+    margin-bottom: 25px;
+}
+
+.all-form .form-control:focus {
+    border: none;
+    outline: none;
+    color: var(--dark-blue-color);
+}
+
+.all-form .d-grid .btn {
+    width: 100%;
+    margin: 5px 10px 20px 10px;
+}
+
+/* validation field */
+/* all icon */
+
+.all-form .abs-con {
+    position: relative;
+}
+
+.eye {
+    cursor: pointer;
+    position: absolute;
+    top: 39px;
+    left: 1em;
+    color: var(--blue-color);
+}
+
+.eyeAdmin {
+    cursor: pointer;
+    position: absolute;
+    top: 39px;
+    left: 1em;
+    color: var(--blue-color);
+}
+
+.start-icon {
+    position: absolute;
+    top: 39px;
+    right: 1.3em;
+    color: var(--blue-color);
+}
+
+#hide1 {
+    display: none;
+}
+
+#hide3 {
+    display: none;
+}
+
+#password.is-invalid,
+#email.is-invalid {
+    background-image: none;
+}
+
+.error-alert {
+    margin: 5px 37px -20px 1px;
+    width: 346px;
+}
+
+/* End form */
+/************** end login.php **************/
+/************** Start advance_search.php **************/
+
+.advance_searchTitle {
+    background-color: rgba(78, 194, 237, 0.2);
+    font-weight: bold;
+}
+
+.searchForm {
+    background-color: #EBEBEB;
+}
+
+.searchForm .form-label {
+    font-weight: bold;
+    color: var(--blue-color);
+    font-size: 20px;
+}
+
+.searchForm .form-control {
+    color: var(--dark-blue-color);
+    border-radius: 10px;
+    padding-right: 30px;
+}
+
+.searchForm .rest-btn,
+.searchForm .rest-btn:hover {
+    background-color: #FFF;
+    border: 2px var(--blue-color);
+    color: var(--blue-color);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/************** End advance_search.php **************/
+/************** Start book_details.php **************/
+
+.book-detail {
+    background-color: #EBEBEB;
+}
+
+.book-detail .all-detail .detail {
+    color: var(--blue-color);
+    font-weight: bold;
+}
+
+.book-detail .all-detail p {
+    margin-bottom: 0;
+}
+
+.book-detail .all-detail .custom-border {
+    border-left: 2px solid var(--dark-blue-color);
+}
+
+.book-detail .book-desc {
+    background-color: #FFF;
+    color: var(--dark-blue-color);
+    padding: 0;
+    margin: 0;
+}
+
+.book-detail-btn {
+    background-color: var(--blue-color);
+    font-weight: bold;
+    color: #FFF;
+    margin: 10px;
+}
+
+.book-detail-btn:hover {
+    background-color: var(--blue-color);
+    font-weight: bold;
+    color: #FFF;
+    margin: 10px;
+}
+
+.hand-icon {
+    font-size: 10px;
+}
+
+.book-icon {
+    font-size: 6px;
+}
+
+/* upload page */
+
+.upload-form .form-control {
+    width: 50%;
+}
+
+/* style popup btn */
+
+.add {
+    background-color: var(--blue-color);
+    color: #FFF;
+    width: 30%;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.cancel {
+    background-color: #7F7F7F;
+    color: #FFF;
+    width: 30%;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.logout-popup {
+    background-color: var(--red-color);
+    color: #FFF;
+    width: 30%;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.add:hover {
+    background-color: #FFF;
+    color: var(--blue-color);
+    border: 2px solid var(--blue-color);
+    font-weight: bold;
+}
+
+.cancel:hover {
+    background-color: #FFF;
+    color: #7F7F7F;
+    width: 30%;
+    border: 2px solid #7F7F7F;
+    font-weight: bold;
+}
+
+.logout-popup:hover {
+    background-color: #FFF;
+    color: var(--red-color);
+    border: 2px solid var(--red-color);
+    font-weight: bold;
+}
+
+/* read more */
+
+.more-text,
+.less-btn {
+    display: none;
+}
+
+.more-btn,
+.less-btn {
+    color: var(--blue-color);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/************** End book_details.php **************/
+/* start of loading icon  */
+
+.load-more-scroll-loader {
+    display: block;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #207ABF;
+    -webkit-animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    -webkit-animation: lds-ellipsis1 0.6s infinite;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+    background: #202C53;
+    left: 8px;
+    -webkit-animation: lds-ellipsis2 0.6s infinite;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    -webkit-animation: lds-ellipsis2 0.6s infinite;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+    background: #202C53;
+    left: 56px;
+    -webkit-animation: lds-ellipsis3 0.6s infinite;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+
+@-webkit-keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@-webkit-keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+/*********** end of loading icon *******************/
