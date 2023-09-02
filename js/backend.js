@@ -25,7 +25,7 @@ function hidePassword(target) {
 function searchFormCheck() {
     var count = 0;
     //check from all input type of it is text
-    $('#search_form input[type=text]').each(function() {
+    $('#search_form input[type=text]').each(function () {
         if ($(this).val()) {
             count++;
             return false;
@@ -54,11 +54,11 @@ function loadSection(url, container, options) {
         url: url,
         data: Object.assign({ limit: limit, start: start }, options),
         cache: false,
-        beforeSend: function() {
+        beforeSend: function () {
             // to show loading icon
             $('.load_more_scroll_loader').removeClass("d-none");
         },
-        success: function(response) {
+        success: function (response) {
             // to add the response to the page
             $("#" + container).append(response);
             // to hide loading icon
@@ -72,7 +72,7 @@ function loadSection(url, container, options) {
                 errorMessage(container, options.section);
             }
         },
-        error: function(response) {
+        error: function (response) {
             // do some thing
         }
     });
@@ -120,12 +120,12 @@ function search(searchText, url, options) {
             url: url,
             data: options,
             cache: false,
-            beforeSend: function() {
+            beforeSend: function () {
                 // to show loading icon
                 // old icon : // fa-circle-notch
                 $("#search_icon").addClass('fa-spinner-third fa-spin').removeClass('fa-magnifying-glass');
             },
-            success: function(response) {
+            success: function (response) {
                 // to add the response to the page
                 $('#result_list').html(response);
                 // to hide loading icon
@@ -133,7 +133,7 @@ function search(searchText, url, options) {
                 // to reset the current focus suggestion item
                 currentFocus = -1;
             },
-            error: function(response) {
+            error: function (response) {
                 // handel error
             }
 
@@ -155,29 +155,29 @@ function myTimer(url) {
 }
 
 // to call function only when page loaded
-$(document).ready(function() {
+$(document).ready(function () {
     // make the width of search result equal to search input
     $('#result_list').width($('.search').width());
 
     // hide search result
-    $("#search_txt").blur(function() {
-        setTimeout(function() {
+    $("#search_txt").blur(function () {
+        setTimeout(function () {
             $('#result_list').hide();
         }, 200);
     });
 
     // show search result
-    $("#search_txt").focus(function() {
+    $("#search_txt").focus(function () {
         $('#result_list').show();
     });
 
     // for click rating star style
-    $(".rate").click(function() {
+    $(".rate").click(function () {
         $(this).addClass("active").siblings().removeClass("active");
     });
 
     // to navigate search suggestion using arrow key
-    $("#search_txt").keydown(function(e) {
+    $("#search_txt").keydown(function (e) {
         switch (e.key) {
             case "ArrowDown":
                 Navigate(1);
@@ -197,7 +197,7 @@ $(document).ready(function() {
     });
 
     // for suggestion navigation
-    var Navigate = function(diff) {
+    var Navigate = function (diff) {
         currentFocus += diff;
         var listItems = $(".search-item");
 
@@ -213,7 +213,7 @@ $(document).ready(function() {
     };
 
     // to fill input with value when click edit for category popup
-    $(document).on("click", ".cat-edit", function(e) {
+    $(document).on("click", ".cat-edit", function (e) {
 
         // get cat name and id
         var cat_id = $(this).attr("cat-data");
@@ -232,7 +232,7 @@ $(document).ready(function() {
     });
 
     // to rest category edit filed when click (x) btn
-    $("#add_category").on('hidden.bs.modal', function() {
+    $("#add_category").on('hidden.bs.modal', function () {
         $("#catForm").get(0).reset();
         // change popup title and save btn
         $("#add_category_label").text("إضافة قسم");
@@ -245,13 +245,13 @@ $(document).ready(function() {
     });
 
     // to rest all filed including hidden filed 
-    $('#add_category').on('reset', function() {
+    $('#add_category').on('reset', function () {
         $("#add_category #cat_id").val('');
         $("#add_category #cat_name").removeClass("is-invalid");
     });
 
     //to check form checkbooks in signup 
-    $("#checkbox").change(function() {
+    $("#checkbox").change(function () {
         if (this.checked) {
             $('#check_agree').text("");
         } else {
@@ -259,9 +259,9 @@ $(document).ready(function() {
         }
     });
     //to check the error message
-    $(document).on("DOMSubtreeModified", ".invalid-feedback", function() {
+    $(document).on("DOMSubtreeModified", ".invalid-feedback", function () {
         var count = 0;
-        $(".invalid-feedback").each(function() {
+        $(".invalid-feedback").each(function () {
             if ($(this).text().length != 0) {
                 count++;
                 return;
@@ -275,13 +275,13 @@ $(document).ready(function() {
     });
 
     //to read more in book_details page
-    $('.more-btn').click(function() {
+    $('.more-btn').click(function () {
         $('.more-btn').hide();
         $('.more-text').show();
         $('.short-text').css('display', 'none');
         $('.less-btn').show();
     });
-    $('.less-btn').click(function() {
+    $('.less-btn').click(function () {
         $('.short-text').show();
         $('.more-text').hide();
         $('.more-btn').show();
@@ -290,7 +290,7 @@ $(document).ready(function() {
 
     //add book page
     //to show series detail
-    $("#checkbox_has_series").change(function() {
+    $("#checkbox_has_series").change(function () {
         if (this.checked) {
             $('.series-group').show(500);
         } else {
@@ -299,21 +299,21 @@ $(document).ready(function() {
     });
     //to show  attachment details
 
-    $("#checkbox_has_attachment").change(function() {
+    $("#checkbox_has_attachment").change(function () {
         if (this.checked) {
             $('.attachment-group').show(500);
         } else {
             $('.attachment-group').hide(500);
         }
     });
-    $('input[type=radio][name=chose_part]').change(function() {
+    $('input[type=radio][name=chose_part]').change(function () {
 
         if (this.value == 'one') {
             $('.one-part-container').show(500);
             $('.multi-part-container').hide(500);
             $('#part_no').val("");
             $('#more_part').html("");
-            $('.one-part-container input').each(function() {
+            $('.one-part-container input').each(function () {
                 $(this).prop("disabled", false);
                 $(this).prop("required", true);
 
@@ -321,7 +321,7 @@ $(document).ready(function() {
         } else {
             $('.multi-part-container').show(500);
             $('.one-part-container').hide(500);
-            $('.one-part-container input').each(function() {
+            $('.one-part-container input').each(function () {
                 $(this).prop("disabled", true);
                 $(this).prop("required", false);
             });
@@ -370,12 +370,12 @@ function checkBookExist(bookName) {
     $.ajax({
         type: "HEAD",
         url: "upload/pdf/" + bookName,
-        error: function() {
+        error: function () {
             //file not exists
             $("#alert_wrapper").html('');
             $("#upload_btn").prop("disabled", false);
         },
-        success: function() {
+        success: function () {
             //file exists
             show_alert("الكتاب موجود مسبقاً..!", "danger");
             $("#upload_btn").prop("disabled", true);
@@ -404,13 +404,13 @@ function checkFileExist(filed, type) {
     $.ajax({
         type: "HEAD",
         url: `upload/${type}/${fileName}`,
-        error: function() {
+        error: function () {
             //file not exists
             $(filed).removeClass("is-invalid").next().text("");
             $("input:submit").prop("disabled", false);
             photoPreview(filed.files[0]);
         },
-        success: function() {
+        success: function () {
             //file exists
             $(filed).addClass("is-invalid").next().text("الصورة موجودة مسبقاً..!");
             $("input:submit").prop("disabled", true);
@@ -460,26 +460,26 @@ function upload() {
         contentType: false,
         cache: false,
         processData: false,
-        xhr: function() {
+        xhr: function () {
             var my_xhr = $.ajaxSettings.xhr();
             if (my_xhr) {
-                my_xhr.upload.addEventListener("progress", function(event) {
+                my_xhr.upload.addEventListener("progress", function (event) {
                     Progress(event.loaded, event.total);
                 });
             }
             return my_xhr;
         },
         beforeSend: beforeSend(),
-        success: function(response) {
+        success: function (response) {
             reset_input();
             if (response.status == 1) {
                 show_alert(response.message, "success");
-                setTimeout(function() { window.history.back() }, 5000);
+                setTimeout(function () { window.history.back() }, 5000);
             } else {
                 show_alert(response.message, "danger");
             }
         },
-        error: function(response) {
+        error: function (response) {
             reset_input();
             show_alert("خطأ في رفع الملف", "danger");
             console.log(response);
@@ -489,7 +489,7 @@ function upload() {
 
     //cancel the upload when click btn
     $("#cancel_btn").click(
-        function() {
+        function () {
             xhr_request.abort();
         }
     )
@@ -546,7 +546,7 @@ function checkSelectData($select, $filed, $div) {
         url: "field_validation.php",
         data: { filed: $filed, select: $select },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.status == 0) {
                 $(class_name).removeClass("is-invalid");
                 $($div).text('');
@@ -555,7 +555,7 @@ function checkSelectData($select, $filed, $div) {
                 $($div).text(response.message);
             }
         }
-    }).done(function(response, textStatus, jqXHR) {
+    }).done(function (response, textStatus, jqXHR) {
         // checkLoanError();
     });
 }
@@ -572,7 +572,7 @@ function checkField($select, $filed, $div, oldAuthorName = '') {
             data: { filed: $filed, select: $select },
             type: "POST",
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.status == 0) {
                     $(class_name).removeClass("is-invalid");
                     $($div).text('');
@@ -594,7 +594,7 @@ function checkSignupField($select, $filed, $div) {
         data: { filed: $filed, select: $select },
         type: "POST",
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.status == 0) {
                 $(class_name).removeClass("is-invalid");
                 $($div).text('');
@@ -605,33 +605,68 @@ function checkSignupField($select, $filed, $div) {
         }
     });
 }
-
-//check if loan_date larger than loan_return_date
+/**
+ * Function to check date conditions and display error messages.
+ *
+ * @param {string} first_date - The type of date comparison ('now', 'just_one', or custom date).
+ * @param {string} last_date - The end date for comparison.
+ */
 function checkDate(first_date, last_date) {
-    // initialize date and message and condition
+    // Initialize date and error message variables
     var start_date = '';
     var end_date = new Date($(last_date).val());
     var error_msg = '';
-    var condition = '';
 
+    // Check if first_date is 'now' (current date)
     if (first_date === 'now') {
         start_date = new Date();
-        condition = end_date.getTime() < start_date.getTime();
-        error_msg = 'لايمكن ان يكون تاريخ الإعادة قبل او يساوي تاريخ الإعارة';
-    } else if (first_date === 'just_one') {
+        // Check if end_date is before or equal to start_date
+        if (end_date.getTime() <= start_date.getTime()) {
+            error_msg = 'لايمكن ان يكون تاريخ الإعادة قبل او يساوي تاريخ الإعارة';
+        }
+    }
+    // Check if first_date is 'just_one' (current date)
+    else if (first_date === 'just_one') {
         start_date = new Date();
-        condition = end_date.getTime() >= start_date.getTime();
-        error_msg = 'لا يمكن ان يكون تاريخ التأسيس بعد او يساوي تاريخ اليوم';
-    } else if ($(first_date).val() && $(last_date).val()) {
+        // Check if end_date is after or equal to start_date
+        if (end_date.getTime() >= start_date.getTime()) {
+            error_msg = 'لا يمكن ان يكون تاريخ التأسيس بعد او يساوي تاريخ اليوم';
+        }
+    }
+    // Check if custom dates are provided
+    else if ($(first_date).val() && $(last_date).val()) {
+        const currentDate = new Date();
+        const fiveYearsAgo = new Date(currentDate);
+        fiveYearsAgo.setFullYear(currentDate.getFullYear() - 5);
+
         start_date = new Date($(first_date).val());
-        condition = end_date.getTime() <= start_date.getTime();
-        error_msg = 'لايمكن ان يكون تاريخ الوفاه قبل او يساوي تاريخ الميلاد';
+
+        // Check if end_date is before or equal to start_date
+        if (end_date <= start_date) {
+            error_msg = 'لايمكن ان يكون تاريخ الوفاه قبل او يساوي تاريخ الميلاد';
+            console.log("Condition 1: " + error_msg);
+        }
+        // Check if start_date is more than 5 years ago from today
+        else if (start_date > fiveYearsAgo) {
+            console.log("less than five years" + start_date + "| HHHH |" + fiveYearsAgo);
+            error_msg = 'تاريخ البداية يجب أن يكون قبل 5 سنوات من اليوم';
+            console.log("Condition 2: " + error_msg);
+        }
+        // No specific conditions met
+        else {
+            console.log("No condition met");
+            // You can add additional logic here if needed
+        }
     }
 
-    // show and hide error message according to condition
-    if (condition) $(last_date).addClass("is-invalid").next().text(error_msg);
-    else $(last_date).removeClass("is-invalid").next().text('');
+    // Show and hide error message based on conditions
+    if (error_msg) {
+        $(last_date).addClass("is-invalid").next().text(error_msg);
+    } else {
+        $(last_date).removeClass("is-invalid").next().text('');
+    }
 }
+
 
 // to check the author name and category name is not repeated
 function checkName(url, param, filed, oldAuthorName) {
@@ -644,7 +679,7 @@ function checkName(url, param, filed, oldAuthorName) {
             url: url,
             data: param,
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.status == 0) {
                     filed.addClass("is-invalid").next().text(response.message);
                 } else {
@@ -678,7 +713,7 @@ function autoCompleteField($table, $filed, $value, $datalist, $error) {
         data: { table: $table, filed: $filed, value: $value, datalist: $datalist },
         type: "POST",
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.status == 0) {
                 $(class_name).addClass("is-invalid").removeClass("is-valid");
                 $($error).text(response.message);
