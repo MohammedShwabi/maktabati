@@ -12,5 +12,6 @@ try {
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // echo 'You Are Connected to Database </br>';
 } catch (PDOException $e) {
-    echo 'Failed To Connect' . $e->getMessage() . '</br>';
+    include_once "errors/500.php"; // Include the error page
+    die();
 }
