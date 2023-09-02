@@ -644,18 +644,10 @@ function checkDate(first_date, last_date) {
         // Check if end_date is before or equal to start_date
         if (end_date <= start_date) {
             error_msg = 'لايمكن ان يكون تاريخ الوفاه قبل او يساوي تاريخ الميلاد';
-            console.log("Condition 1: " + error_msg);
         }
         // Check if start_date is more than 5 years ago from today
         else if (start_date > fiveYearsAgo) {
-            console.log("less than five years" + start_date + "| HHHH |" + fiveYearsAgo);
-            error_msg = 'تاريخ البداية يجب أن يكون قبل 5 سنوات من اليوم';
-            console.log("Condition 2: " + error_msg);
-        }
-        // No specific conditions met
-        else {
-            console.log("No condition met");
-            // You can add additional logic here if needed
+            error_msg = 'تاريخ الميلاد يجب أن يكون قبل 5 سنوات من اليوم';
         }
     }
 
