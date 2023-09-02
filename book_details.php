@@ -168,23 +168,25 @@ if ($row['rating'] != 0) {
                 <div class="description pe-5 pb-3 ps-5">
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <?php
-                    // echo $row['description'] 
+                    // Retrieve the full description from a database row
                     $full_desc = $row['description'];
-                    if (strlen($full_desc) > 500) {
-                        $read_less = substr($full_desc, 0, 500);
-                        $read_more = substr($full_desc, 500);
 
-                        echo $read_less;
-                        echo "<span class='more-text'>" . $read_more . "</span>";
-                        echo "<span class='dots'>...  </span>";
+                    // Truncate the full description to a maximum of 50 words
+                    $truncated_desc = truncateText($full_desc, 50);
 
-                        echo "<span  class='more-btn'>" . lang('read_more') . "</span>";
+                    // Display the truncated description within a span with the 'short-text' class
+                    echo "<span class='short-text'>" . $truncated_desc . "</span>";
+
+                    // Check if the full description contains more than 50 words
+                    if (countArabicWords($full_desc) > 50) {
+                        // If so, display the full description within a span with the 'more-text' class
+                        echo "<span class='more-text'>" . $full_desc . "</span>";
+
+                        // Display 'Read More' and 'Read Less' buttons using language-specific labels
+                        echo "<span class='more-btn'>" . lang('read_more') . "</span>";
                         echo "<span class='less-btn'>" . lang('read_less') . "</span>";
-                    } else {
-                        echo $row['description'];
                     }
-                    // echo "<br/><br/>";
-                    // echo substr($row['description'],0,600)  ;
+
                     ?>
                 </div>
             </div>
@@ -222,7 +224,7 @@ if ($row['rating'] != 0) {
             }
 
             ?>
-           
+
             <a href="#" class="btn book-detail-btn col-sm-6 col-md-4 col-lg-2 " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <span><i class="fa-solid fa-star ps-3 " style=" padding-top: 5px ; color: #F9B13B;"></i></span>
                 <?php echo lang('rating') ?>

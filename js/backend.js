@@ -278,13 +278,13 @@ $(document).ready(function() {
     $('.more-btn').click(function() {
         $('.more-btn').hide();
         $('.more-text').show();
-        $('.dots').css('display', 'none');
+        $('.short-text').css('display', 'none');
         $('.less-btn').show();
     });
     $('.less-btn').click(function() {
+        $('.short-text').show();
         $('.more-text').hide();
         $('.more-btn').show();
-        $('.dots').fadeIn();
         $('.less-btn').hide();
     });
 
