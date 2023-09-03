@@ -63,23 +63,22 @@ function author($author_id, $author_name, $author_img, $book_no, $delete_fun)
     $author = '
     <div class="views-row col-lg-3 col-md-6 col-sm-12 book-box">
 
-        <div class="category-box d-flex justify-content-center align-content-center align-items-center flex-wrap border rounded">
-            <a class="text-decoration-none" href="author_section.php?auth=' . $author_id . '" title="' . $author_name . '">
-                <div class="book-result mt-0">
-                    <div class="writer-avatar d-flex justify-content-center">
-                        <img class="img lazyload media-object" width="auto" height="auto" title="' . $author_name . '" alt="' . $author_name . '" data-src="upload/authors/' . $author_img . '">
-                    </div>
-                    <h3>' . $author_name . '</h3>
-                    <p><span><i class="fa-duotone fa-books" style="color: #207ABF;"></i> ' . $book_no . '</span> ' . lang("book") . '</p>
+        <div class="category-box d-flex justify-content-center align-content-center align-items-center flex-wrap border rounded"
+        onclick="window.location.href = \'author_section.php?auth=' . $author_id . '\'" title="' . $author_name . '" role="button">
+            <div class="book-result mt-0">
+                <div class="writer-avatar d-flex justify-content-center">
+                    <img class="img lazyload media-object" width="auto" height="auto" title="' . $author_name . '" alt="' . $author_name . '" data-src="upload/authors/' . $author_img . '">
                 </div>
-            </a>
+                <h3>' . $author_name . '</h3>
+                <p><span><i class="fa-duotone fa-books" style="color: #207ABF;"></i> ' . $book_no . '</span> ' . lang("book") . '</p>
+            </div>
             <ul class="book-links text-center">
                 <li>
                     <a ' . $delete_fun . ' style="border: 1px solid red" id="delete_icon" data-bs-toggle="modal" data-bs-target="#' . $delete_pop . '" data-tip="' . lang('delete_auth') . '">
                         <i class="fa-duotone fa-trash"></i>
                     </a>
                 </li>
-                <li><a style="border: 1px solid" id="edit_icon" href="author_edit.php?auth=' . $author_id . '" data-tip="' . lang('edit_auth') . '"><i class="fa-duotone fa-pen"></i></a></li>
+                <li><a style="border: 1px solid" id="edit_icon" href="author_edit.php?auth=' . $author_id . '" data-tip="' . lang('edit_auth') . '" onclick="event.stopPropagation();"><i class="fa-duotone fa-pen"></i></a></li>
             </ul>
         </div>
     </div>
@@ -94,12 +93,12 @@ function category($book_no, $section, $delete_fun)
     $delete_pop = $book_no > 0 ? 'no_del_pop' : 'del_pop';
     $category = '
     <div class="views-row col-lg-2 col-md-4 col-sm-6 book-box col-6">
-        <div class="category-box d-flex justify-content-center align-content-center align-items-center flex-wrap border rounded">
-            <a class="text-decoration-none" href="' . $section["url"] . '" title="' . $section["name"] . '">
-                <div class="book-result ">
-                    <h3>' . $section["name"] . '</h3>
-                    <p> <span><i class="fa-duotone fa-books" style="color: #207ABF;"></i> ' . $book_no . '</span> ' . lang("book") . '</p>
-                </div>
+        <div class="category-box d-flex justify-content-center align-content-center align-items-center flex-wrap border rounded"
+            onclick="window.location.href = \'' . $section["url"] . '\'" title="' . $section["name"] . '" role="button">
+            <div class="book-result ">
+                <h3>' . $section["name"] . '</h3>
+                <p> <span><i class="fa-duotone fa-books" style="color: #207ABF;"></i> ' . $book_no . '</span> ' . lang("book") . '</p>
+            </div>
             </a>
             <ul class="book-links text-center">
                 <li>
@@ -107,7 +106,7 @@ function category($book_no, $section, $delete_fun)
                         <i class="fa-duotone fa-trash"></i>
                     </a>
                 </li>
-                <li><a style="border: 1px solid #0d6efd" id="edit_icon"  class="cat-edit" ' . $section["edit_url"] . ' data-tip="' . $section["edit_txt"] . '"><i class="fa-duotone fa-pen"></i></a></li>
+                <li><a style="border: 1px solid #0d6efd" id="edit_icon"  class="cat-edit" ' . $section["edit_url"] . ' data-tip="' . $section["edit_txt"] . '" onclick="event.stopPropagation();"><i class="fa-duotone fa-pen"></i></a></li>
             </ul>
         </div>
     </div>';
