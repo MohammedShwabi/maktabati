@@ -32,14 +32,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         if (!empty($pub_name) && !empty($sequence_no) && !empty($establish_date) && !empty($pub_owner) && !empty($pub_lang) && !empty($pub_id)) {
-            //update data to DB
-            $results = insert_data(EDIT_PUB, [$pub_name, $establish_date, $pub_owner, $sequence_no, $pub_id]);
-            $results1 = insert_data(EDIT_PUB_LANG, [$pub_lang, $pub_id]);
-            //check if data inserted
-            if ($results && $results1) {
-                redirect_user(lang('publish_edit_success'), 5, "publishers.php", "info");
-            } else {
-                $result = lang('publish_error');
+            // //update data in DB
+            try {
+                $results = insert_data(EDIT_PUB, [$pub_name, $establish_date, $pub_owner, $sequence_no, $pub_id]);
+                $results1 = insert_data(EDIT_PUB_LANG, [$pub_lang, $pub_id]);
+
+                if ($results || $results1) {
+                    redirect_user(lang('publish_edit_success'), 5, "publishers.php", "info");
+                } else {
+                    // Handle the error condition here.
+                    $result = "قم بتعديل اي قيمة للتعديل على دار النشر";
+                }
+            } catch (PDOException $e) {
+                if ($e->getCode() == '23000') { 
+                    // Check the specific error code for duplicate entry
+                    $result = "اسم دار النشر تم اخذه مسبقا";
+                } else {
+                    // Handle other database-related errors here.
+                    // $result = "An error occurred: " . $e->getMessage();
+                    $result = lang('publish_error');
+                }
             }
         } else {
             $result = lang('loan_empty');

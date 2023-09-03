@@ -4,7 +4,6 @@ require_once 'init.php';
 $pageTitle = lang("advance_search_title");
 $activePage = "advance_search";
 require_once $tmpl . 'header.php';
-
 // validate session
 if (!isset($_SESSION['UserEmail'])) {
     redirect_user();
@@ -15,80 +14,21 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 //check if variables is not empty
-if (
-    empty($_POST["book_title"]) && empty($_POST["search_author"]) && empty($_POST["search_publish_date"]) && empty($_POST["search_language"])
-    && empty($_POST["search_category"]) && empty($_POST["search_publisher"]) && empty($_POST["search_dewyNo"]) && empty($_POST["search_isbn"])
-    && empty($_POST["search_series_name"])
-) {
+if (empty($_POST["search_input"]) || empty($_POST["search_option"])) {
     //print empty message
-    echo " <div class='alert alert-danger text-center fw-bold'>" . lang('search_empty') . "</div>";
+    echo "<br><br><br> <div class='alert alert-danger text-center fw-bold'>" . lang('input_search_empty') . "</div>";
 } else {
     //filter all element
-    $title          = filter_input(INPUT_POST, 'book_title', FILTER_SANITIZE_SPECIAL_CHARS);
-    $author         = filter_input(INPUT_POST, 'search_author', FILTER_SANITIZE_SPECIAL_CHARS);
-    $publish_date   = filter_input(INPUT_POST, 'search_publish_date', FILTER_SANITIZE_SPECIAL_CHARS);
-    $language       = filter_input(INPUT_POST, 'search_language', FILTER_SANITIZE_SPECIAL_CHARS);
-    $category       = filter_input(INPUT_POST, 'search_category', FILTER_SANITIZE_SPECIAL_CHARS);
-    $publisher      = filter_input(INPUT_POST, 'search_publisher', FILTER_SANITIZE_SPECIAL_CHARS);
-    $dewyNo         = filter_input(INPUT_POST, 'search_dewyNo', FILTER_SANITIZE_SPECIAL_CHARS);
-    $isbn           = filter_input(INPUT_POST, 'search_isbn', FILTER_SANITIZE_SPECIAL_CHARS);
-    $series_name    = filter_input(INPUT_POST, 'search_series_name', FILTER_SANITIZE_SPECIAL_CHARS);
-
-    //work to generate select 
-    $where = "";
-    $table = "advance_search";
-    $values  = array();
-
-    if (!empty($title)) {
-        $where .= "title  like  ? AND ";
-        $values[]  = "%" . $title . "%";
-    }
-    if (!empty($author)) {
-        $where .= "author_name  like  ? AND ";
-        $values[] = "%" . $author . "%";
-    }
-    //check from date format
-    if (!empty($publish_date)) {
-        $good_date=date_create($publish_date);
-        if($good_date){
-            if(date_format($good_date, "Y-m")){
-                $where .= "publication_date  like  ? AND ";
-                $values[] = "%" . $publish_date . "%";
-            }
-        }
-    }
-    if (!empty($language)) {
-        $where .= "	lang_name  like  ? AND ";
-        $values[] = "%" . $language . "%";
-    }
-    if (!empty($category)) {
-        $where .= "cat_name  like  ? AND ";
-        $values[] = "%" . $category . "%";
-    }
-    if (!empty($publisher)) {
-        $where .= "pub_name  like  ? AND ";
-        $values[] = "%" . $publisher . "%";
-    }
-    if (!empty($dewyNo)) {
-        $where .= "dewey_no  like  ? AND ";
-        $values[] = "%" . $dewyNo . "%";
-    }
-    if (!empty($isbn)) {
-        $where .= "isbn  like  ? AND ";
-        $values[] = "%" . $isbn . "%";
-    }
-    if (!empty($series_name)) {
-        $table = "search_with_series";
-        $where .= "series_name  like  ? AND ";
-        $values[] = "%" . $series_name . "%";
-    }
+    $search_input          = filter_input(INPUT_POST, 'search_input', FILTER_SANITIZE_SPECIAL_CHARS);
+    $search_option         = filter_input(INPUT_POST, 'search_option', FILTER_SANITIZE_SPECIAL_CHARS);
 
     //get the matching data from DB
     $results = 0;
-    if(count($values) !== 0){
-        $sql = "Select * From " . $table . " Where " . rtrim($where, "AND ");
-        $results = get_all_data($sql, $values);
-    }
+    // $sql = "Select * From advance_search Where " . rtrim($search_option) . " Like % " . $search_input . "%";
+
+    $sql = "SELECT * FROM advance_search WHERE $search_option LIKE ?";
+    $searchTerm = '%' . $search_input . '%';
+    $results = get_all_data($sql, [$searchTerm]);
 
     // make breadcrumb
     $items = array(

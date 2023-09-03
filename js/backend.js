@@ -721,7 +721,6 @@ function autoCompleteField($table, $filed, $value, $datalist, $error) {
 }
 
 // to  make  multi part
-
 function howParts() {
     var part_no = $('#part_no').val();
     if (part_no == '') {

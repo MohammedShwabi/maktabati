@@ -74,6 +74,7 @@ function lang($phrase)
     'series_name_place'                    => 'عالم المعرفة',
     'dewy_no_place'                        => '225',
     'rest'                                 => 'إعادة تعين',
+    'input_search_empty'                   => 'يجب ملئ الحقل للبحث',
     'search_empty'                         => ' للبحث يجب ملئ حقل واحد على الاقل',
     'no_match_result'                      =>'لا يوجد نتائج مطابقة لهذا الحقل ',
     //End  of advance_search.php
@@ -330,8 +331,8 @@ function lang($phrase)
 
 
     'no_connection_error' => 'عذرا تاكد من اتصالك بقواعد البيانات وحاول مرة اخرى',
-    '' => '',
-    '' => '',
+    'search_about' => 'ابحث عن ',
+    'search_use' => 'بحث بإستخدام',
     '' => '',
 
   );
