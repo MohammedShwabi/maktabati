@@ -1,5 +1,17 @@
 <?php
-//to redirect user 
+
+/**
+ * Redirects the user to a specified URL with an optional message and delay.
+ *
+ * This function redirects the user to the specified URL using the "refresh" header.
+ * It can also display a message to the user with an optional delay before the redirection.
+ *
+ * @param string|null $message Optional message to display to the user (default is null).
+ * @param int $second Optional delay in seconds before redirection (default is 0).
+ * @param string $url Optional URL to redirect to (default is 'login.php').
+ * @param string $alert Optional CSS class for the alert message (default is 'danger').
+ * @return void
+ */
 function redirect_user($message = null, $second = 0, $url = 'login.php', $alert = "danger")
 {
     if (!empty($message)) {
@@ -22,13 +34,22 @@ function redirect_user($message = null, $second = 0, $url = 'login.php', $alert 
     exit();
 }
 
-// to redirect user to previous page
+/**
+ * Redirects the user to the previous page.
+ *
+ * This function checks the HTTP_REFERER header to determine the previous page
+ * and redirects the user to that page using a header(Location) redirect.
+ * If the HTTP_REFERER is not set, it redirects the user to "index.php" by default.
+ *
+ * @return void
+ */
 function go_back()
 {
     $url = $_SERVER['HTTP_REFERER'] == NULL ? "index.php" : $_SERVER['HTTP_REFERER'];
     header("LOCATION: " . $url);
     exit();
 }
+
 
 
 /**
