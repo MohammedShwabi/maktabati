@@ -89,7 +89,14 @@ function errorMessage(container, param) {
 // to load more data on scroll event only if there is more category in database
 function scrollLoader(url, container, option) {
 
-    if ($(window).scrollTop() >= $(document).height() - $(window).height() && load_status == 'inactive') {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+    var isEndPage = scrollTop + clientHeight >= scrollHeight - 200;
+
+    // Check if the user is near the bottom of the page
+    if (isEndPage && load_status == 'inactive') {
+
+    // if ($(window).scrollTop() >= $(document).height() - $(window).height() && load_status == 'inactive') {
         load_status = 'active';
         start = start + limit;
         loadSection(url, container, option);
