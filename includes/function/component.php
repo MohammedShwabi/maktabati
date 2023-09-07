@@ -1,12 +1,27 @@
 <?php
 require_once "includes/function/queries.php";
 
-// for book design
+/**
+ * Generates HTML markup for displaying a book teaser with various details.
+ *
+ * @param string $book_img The filename of the book's image.
+ * @param int $book_id The unique identifier of the book.
+ * @param string $title The title of the book.
+ * @param float $rating The rating of the book.
+ * @param string $delete_fun The JavaScript function to trigger on delete icon click.
+ * @param array $section An associative array containing section information (e.g., name and URL).
+ *
+ * @return void This function echoes the generated HTML markup for the book teaser.
+ */
 function book($book_img, $book_id, $title, $rating, $delete_fun, $section)
 {
+    // Determine the appropriate delete popup based on the book's state.
     $popup = get_data(SELECT_BOOK_STATE, [$book_id])["book_state"] ? "#no_del_pop" : "#del_pop";
+
+    // Generate star rating HTML using the star_fill function.
     $rate = star_fill($rating);
 
+    // Construct the HTML markup for the book teaser.
     $book = '
     <div class="views-row col-lg-2 col-md-4 col-sm-6 book-box col-6">
 
@@ -38,28 +53,51 @@ function book($book_img, $book_id, $title, $rating, $delete_fun, $section)
     </div>
     ';
 
+    // Echo the generated HTML markup for the book teaser.
     echo $book;
 }
 
-// for star rate design
+/**
+ * Generates HTML for displaying star ratings based on a given rating value.
+ *
+ * @param float $rating The rating value to represent with stars.
+ *
+ * @return string HTML representation of star ratings.
+ */
 function star_fill($rating)
 {
     $rate = '';
     for ($i = 0; $i < 5; $i++) {
 
+        // Determine whether to display a full or empty star based on the remaining rating.
         $star_fill = ($rating > 0) ? "full-stars" : "empty-stars";
-        $rate .= "<i class=\"fa-solid fa-star $star_fill \" style=\"font-size: 19px;\"></i>";
 
+        // Add the star icon to the HTML string.
+        $rate .= "<i class=\"fa-solid fa-star $star_fill\" style=\"font-size: 19px;\"></i>";
+
+        // Decrease the remaining rating.
         $rating--;
     }
     return $rate;
 }
 
-// for author design
+/**
+ * Generates HTML markup for displaying author information and controls.
+ *
+ * @param int $author_id The unique identifier of the author.
+ * @param string $author_name The name of the author.
+ * @param string $author_img The filename of the author's image.
+ * @param int $book_no The number of books associated with the author.
+ * @param string $delete_fun The JavaScript function to trigger on delete icon click.
+ *
+ * @return void This function echoes the generated HTML markup for the author display.
+ */
 function author($author_id, $author_name, $author_img, $book_no, $delete_fun)
 {
-    // make delete icon popup
+    // Determine the appropriate delete popup based on the number of associated books.
     $delete_pop = $book_no > 0 ? 'no_del_pop' : 'del_pop';
+
+    // Construct the HTML markup for displaying author information.
     $author = '
     <div class="views-row col-lg-3 col-md-6 col-sm-12 book-box">
 
@@ -83,14 +121,26 @@ function author($author_id, $author_name, $author_img, $book_no, $delete_fun)
         </div>
     </div>
     ';
+
+    // Echo the generated HTML markup for displaying author information.
     echo $author;
 }
 
-// for category and publisher design
+/**
+ * Generates HTML markup for displaying category information and controls.
+ *
+ * @param int $book_no The number of books associated with the category.
+ * @param array $section An associative array containing section information (e.g., name, URL, delete text, edit URL, edit text).
+ * @param string $delete_fun The JavaScript function to trigger on delete icon click.
+ *
+ * @return void This function echoes the generated HTML markup for the category display.
+ */
 function category($book_no, $section, $delete_fun)
 {
-    // make delete icon popup
+    // Determine the appropriate delete popup based on the number of associated books.
     $delete_pop = $book_no > 0 ? 'no_del_pop' : 'del_pop';
+
+    // Construct the HTML markup for displaying category information.
     $category = '
     <div class="views-row col-lg-2 col-md-4 col-sm-6 book-box col-6">
         <div class="category-box d-flex justify-content-center align-content-center align-items-center flex-wrap border rounded"
@@ -110,12 +160,22 @@ function category($book_no, $section, $delete_fun)
             </ul>
         </div>
     </div>';
+    // Echo the generated HTML markup for displaying category information.
     echo $category;
 }
 
-// for feature box design
+/**
+ * Generates HTML markup for displaying a featured item with an image, title, and subtitle.
+ *
+ * @param string $photo The filename of the featured item's image.
+ * @param string $title The title of the featured item.
+ * @param string $subtitle The subtitle or description of the featured item.
+ *
+ * @return void This function echoes the generated HTML markup for the featured item.
+ */
 function feature($photo, $title, $subtitle)
 {
+    // Construct the HTML markup for displaying a featured item.
     $feature = '
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="feature-box text-white rounded-1 shadow p-4">
@@ -124,19 +184,32 @@ function feature($photo, $title, $subtitle)
             <p>' . $subtitle . '</p>
         </div>
     </div>';
+    
+    // Echo the generated HTML markup for the featured item.
     echo $feature;
 }
 
-// for Sticky Button design
+/**
+ * Generates HTML markup for a sticky button with optional action or modal popup trigger.
+ *
+ * @param string $name The text displayed on the button.
+ * @param string $action The action to be taken when the button is clicked (e.g., URL to navigate to).
+ * @param string $pop The ID of the modal popup (if applicable).
+ *
+ * @return void This function echoes the generated HTML markup for the sticky button.
+ */
 function sticky_button($name, $action, $pop = '')
 {
     $destination = '';
+
+    // Determine the destination based on whether there's an action or modal popup.
     if (!empty($action)) {
-        $destination =  'onclick="window.location.href=\'' . $action . '\';"';
+        $destination = 'onclick="window.location.href=\'' . $action . '\';"';
     } else {
-        $destination =  'data-bs-toggle="modal" data-bs-target="#' . $pop . '"';
+        $destination = 'data-bs-toggle="modal" data-bs-target="#' . $pop . '"';
     }
 
+    // Construct the HTML markup for the sticky button.
     $sticky_button = '
     <div class="overflow-visible add-btn-div">
         <button type="button" class="add-btn add-btn-big rounded-pill pe-3 ps-3" ' . $destination . ' >
@@ -149,12 +222,19 @@ function sticky_button($name, $action, $pop = '')
         </button>
     </div>
     ';
+
+    // Echo the generated HTML markup for the sticky button.
     echo $sticky_button;
 }
 
-// for loading icon design
+/**
+ * Generates HTML markup for a loading spinner icon.
+ *
+ * @return string HTML markup for the loading spinner icon.
+ */
 function load_icon()
 {
+    // Construct the HTML markup for the loading spinner icon.
     $load_icon = '
     <div class="col-xs-12 text-center load_more_scroll_loader">
         <div class="lds-ellipsis">
@@ -165,12 +245,26 @@ function load_icon()
         </div>
     </div>
     ';
+
+    // Return the generated HTML markup for the loading spinner icon.
     return $load_icon;
 }
 
-// for search design
+/**
+ * Generates HTML markup for a search section, including a search bar and search result list.
+ *
+ * @param string $search_page The page or endpoint where the search action will be performed.
+ * @param string $search_place_Holder The placeholder text for the search input.
+ * @param string $action The action URL to submit the search form.
+ * @param string $search_val The initial value of the search input (optional).
+ * @param string $type The type of search (optional).
+ * @param string $table The name of the table to search within (optional).
+ *
+ * @return void This function echoes the generated HTML markup for the search section.
+ */
 function search_section($search_page, $search_place_Holder, $action, $search_val = "", $type = "", $table = "")
 {
+    // Construct the HTML markup for the search section.
     $search = '
     <div class="container my-5 pb-5">
         <div class="row d-flex justify-content-center align-items-center">
@@ -190,10 +284,21 @@ function search_section($search_page, $search_place_Holder, $action, $search_val
             </div>
         </div>
     </div>';
+
+    // Echo the generated HTML markup for the search section.
     echo $search;
 }
 
-// to make jquery search suggestion method for both home page and other pages
+
+/**
+ * Generates a JavaScript search method with optional parameters for filtering.
+ *
+ * @param string $search_page The page or endpoint where the search action will be performed.
+ * @param string $type The type of search (optional).
+ * @param string $table The name of the table to search within (optional).
+ *
+ * @return string JavaScript search method with optional filtering parameters.
+ */
 function search_method($search_page, $type, $table)
 {
     $section = ",$.param({ search_txt: $(this).val()";
@@ -206,20 +311,36 @@ function search_method($search_page, $type, $table)
     return $search_method;
 }
 
-// for page title design
+/**
+ * Generates HTML markup for displaying a page title.
+ *
+ * @param string $title The title text to display on the page.
+ *
+ * @return void This function echoes the generated HTML markup for the page title.
+ */
 function page_title($title)
 {
+    // Construct the HTML markup for the page title.
     $page_title = '
     <div class="container mt-5 pt-5">
         <h1 class="text-center mb-0 pb-0" style="color: #207ABF;">' . $title . '</h1>
     </div>
     ';
+
+    // Echo the generated HTML markup for the page title.
     echo $page_title;
 }
 
-// for page main container design
+/**
+ * Generates HTML markup for a container site with a specified ID and includes a loading icon.
+ *
+ * @param string $container_id The ID attribute for the main container element.
+ *
+ * @return void This function echoes the generated HTML markup for the container site.
+ */
 function container_site($container_id)
 {
+    // Construct the HTML markup for the container site and include a loading icon.
     $container = '
     <div class="container-site">
         <div class="row">
@@ -230,15 +351,27 @@ function container_site($container_id)
     </div>
     <!--  start of loading icon  -->'
         . load_icon();
+
+    // Echo the generated HTML markup for the container site.
     echo $container;
 }
 
-// for load data on scroll JS
+/**
+ * Generates a JavaScript script for loading content into a specified container.
+ *
+ * @param string $url The URL or endpoint for content retrieval.
+ * @param string $container_id The ID of the container where content will be loaded.
+ * @param string $type The type of content to load (optional).
+ * @param string $section The section or category of content to load (optional).
+ *
+ * @return void This function echoes the generated JavaScript script for loading content.
+ */
 function load_script($url, $container_id, $type = "", $section = "")
 {
     $option = empty($type) ? "{" : "{type: '$type'";
     $option .= empty($section) ? "};" : (empty($type) ? "section: '$section'};" : ",section: '$section'};");
 
+    // Construct the JavaScript script for loading content.
     $load_script = '
     <script>
         option = ' . $option . '
@@ -253,12 +386,22 @@ function load_script($url, $container_id, $type = "", $section = "")
             scrollLoader("' . $url . '", "' . $container_id . '", option);
         });
     </script>';
+
+    // Echo the generated JavaScript script for loading content.
     echo $load_script;
 }
 
-// for breadcrumb design
+
+/**
+ * Generates HTML markup for a breadcrumb navigation.
+ *
+ * @param array $items An associative array representing the breadcrumb items (e.g., ['Home' => 'home_url', 'Category' => 'category_url', 'Current Page' => 'current_page_url']).
+ *
+ * @return void This function echoes the generated HTML markup for the breadcrumb navigation.
+ */
 function breadcrumb($items)
 {
+    // Construct the HTML markup for the breadcrumb navigation.
     $breadcrumb = '
     <header>
         <div class="article-header" style="margin-top: 70px;">
@@ -277,10 +420,19 @@ function breadcrumb($items)
         </div>
     </header>
     ';
+
+    // Echo the generated HTML markup for the breadcrumb navigation.
     echo $breadcrumb;
 }
 
-// to generate breadcrumb link
+
+/**
+ * Generates HTML markup for individual breadcrumb items based on an associative array.
+ *
+ * @param array $items An associative array representing the breadcrumb items (e.g., ['Home' => 'home_url', 'Category' => 'category_url', 'Current Page' => 'current_page_url']).
+ *
+ * @return string HTML markup for the individual breadcrumb items.
+ */
 function breadcrumb_items($items)
 {
     $breadcrumb_items = '';
@@ -292,10 +444,22 @@ function breadcrumb_items($items)
     return $breadcrumb_items;
 }
 
-// for author and publisher details
+
+/**
+ * Generates HTML markup for displaying section details, including a title, subtitle, and optional image.
+ *
+ * @param string $section_title The title of the section.
+ * @param string $section_subtitle The subtitle or description of the section.
+ * @param string $section_img The filename of an optional image for the section (if available).
+ *
+ * @return void This function echoes the generated HTML markup for the section details.
+ */
 function section_detail($section_title, $section_subtitle, $section_img = "")
 {
+    // Generate HTML markup for the author's photo (if available).
     $author_photo = empty($section_img) ? "" : '<div class="ps-4"><img class="media-object author-img" width="auto" height="auto" src="upload/authors/' . $section_img . '"></div>';
+
+    // Construct the HTML markup for displaying section details.
     $section_detail = '
     <div class="container-site">
         <div class="row">
@@ -313,12 +477,22 @@ function section_detail($section_title, $section_subtitle, $section_img = "")
         </div>
     </div>
     ';
+
+    // Echo the generated HTML markup for the section details.
     echo $section_detail;
 }
 
-// delete pop up windows design
+/**
+ * Generates HTML markup for a delete confirmation popup modal.
+ *
+ * @param string $delete_msg The message displayed in the confirmation popup.
+ * @param string $url The URL or action to be taken when the delete button is clicked.
+ *
+ * @return void This function echoes the generated HTML markup for the delete confirmation popup.
+ */
 function delete_popup($delete_msg, $url)
 {
+    // Construct the HTML markup for the delete confirmation popup modal.
     $popup = '
     <div class="modal fade" tabindex="-1" id="del_pop" role="dialog">
         <div class="modal-dialog">
@@ -337,14 +511,23 @@ function delete_popup($delete_msg, $url)
             </div>
         </div>
     </div>
-
     ';
+
+    // Echo the generated HTML markup for the delete confirmation popup.
     echo $popup;
 }
 
-// delete pop up windows design
+
+/**
+ * Generates HTML markup for a popup modal indicating that an item cannot be deleted.
+ *
+ * @param string $no_delete_msg The message displayed in the "no delete" popup.
+ *
+ * @return void This function echoes the generated HTML markup for the "no delete" popup modal.
+ */
 function no_delete_popup($no_delete_msg)
 {
+    // Construct the HTML markup for the "no delete" popup modal.
     $no_delete_pop = '
     <div class="modal fade" tabindex="-1" id="no_del_pop" role="dialog">
     <div class="modal-dialog">
@@ -361,13 +544,20 @@ function no_delete_popup($no_delete_msg)
     </div>
     ';
 
+    // Echo the generated HTML markup for the "no delete" popup modal.
     echo $no_delete_pop;
 }
 
-// add category popup
+/**
+ * Generates HTML markup for a modal to add a new category.
+ *
+ * @param string $action The form action URL for submitting the category addition (default is 'add_category.php').
+ *
+ * @return void This function echoes the generated HTML markup for the "add category" modal.
+ */
 function add_cat($action = 'add_category.php')
 {
-
+    // Construct the HTML markup for the "add category" modal.
     $add_cat = '
     <div class="modal fade" id="add_category" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="add_category_label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -397,5 +587,6 @@ function add_cat($action = 'add_category.php')
     </div>
     ';
 
+    // Echo the generated HTML markup for the "add category" modal.
     echo $add_cat;
 }
