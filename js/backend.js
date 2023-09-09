@@ -96,7 +96,7 @@ function scrollLoader(url, container, option) {
     // Check if the user is near the bottom of the page
     if (isEndPage && load_status == 'inactive') {
 
-    // if ($(window).scrollTop() >= $(document).height() - $(window).height() && load_status == 'inactive') {
+        // if ($(window).scrollTop() >= $(document).height() - $(window).height() && load_status == 'inactive') {
         load_status = 'active';
         start = start + limit;
         loadSection(url, container, option);
@@ -265,21 +265,35 @@ $(document).ready(function () {
             $('#check_agree').text("not agree");
         }
     });
-    //to check the error message
-    $(document).on("DOMSubtreeModified", ".invalid-feedback", function () {
-        var count = 0;
-        $(".invalid-feedback").each(function () {
-            if ($(this).text().length != 0) {
-                count++;
-                return;
+
+    // to check the error message 
+    // create a MutationObserver instance
+    var observer = new MutationObserver((mutation) => {
+
+        var hasFeedback;
+        // check if any invalid-feedback is visible
+        $(".invalid-feedback:visible").each(function () {
+            if ($(this).text().trim().length !== 0) {
+                hasFeedback = true;
+                return false; // exit the loop
             }
         });
-        if (count > 0) {
-            $('#submit').prop('disabled', true);
-        } else {
-            $('#submit').prop('disabled', false);
-        }
+
+        // enable or disable the submit button based on the count
+        $('#submit').prop('disabled', hasFeedback);
     });
+    
+    // configuration of the observer
+    var config = {
+        childList: true, // observe child node changes
+        subtree: true // observe descendant node changes
+    }
+
+    // Select the document element to observe
+    var target = document.querySelector('form');
+
+    // pass in the target node, as well as the observer options
+    observer.observe(target, config);
 
     //to read more in book_details page
     $('.more-btn').click(function () {
