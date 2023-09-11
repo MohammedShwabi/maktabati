@@ -8,7 +8,11 @@ var currentFocus = -1;
 
 
 //login.php  && signup.php
-// for Hide and Show the password by using the EYE icons
+/**
+ * Toggles the visibility of a password input field and updates an associated icon.
+ *
+ * @param {string} target - The ID of the password input element.
+ */
 function hidePassword(target) {
     var input = document.getElementById(target);
 
@@ -20,8 +24,10 @@ function hidePassword(target) {
         $("#hide").addClass("fa-eye").removeClass("fa-eye-slash");
     }
 }
-//search form 
-//to check if at least one filed is not empty
+
+/**
+ * Checks the search form for input values and updates form action accordingly.
+ */
 function searchFormCheck() {
     var count = 0;
     //check from all input type of it is text
@@ -46,7 +52,13 @@ function searchFormCheck() {
     }
 }
 
-// to get more section from database and append it to the page
+/**
+ * Loads content from a specified URL into a container using AJAX.
+ *
+ * @param {string} url - The URL to fetch content from.
+ * @param {string} container - The ID of the HTML element where the content will be loaded.
+ * @param {Object} options - Additional options for the AJAX request.
+ */
 // { limit: limit, start: start, type: type , section_id: section_id}
 function loadSection(url, container, options) {
     $.ajax({
@@ -78,7 +90,12 @@ function loadSection(url, container, options) {
     });
 }
 
-// display message if no data found
+/**
+ * Displays an error message in a specified container.
+ *
+ * @param {string} container - The ID of the HTML element where the error message will be displayed.
+ * @param {string|number} param - The parameter indicating the type of error message to display.
+ */
 function errorMessage(container, param) {
     message = '<div class="container text-center" ><h1 class="mb-0 pb-0 pt-5 text-muted">';
     message += isNaN(param) ? 'لا يوجد نتائج فيما تبحث عنه !!' : 'لا يوجد كتب !!';
@@ -86,7 +103,13 @@ function errorMessage(container, param) {
     $("#" + container).html(message);
 }
 
-// to load more data on scroll event only if there is more category in database
+/**
+ * Handles scrolling to trigger loading more content when the user is near the bottom of the page.
+ *
+ * @param {string} url - The URL to fetch more content from.
+ * @param {string} container - The ID of the HTML element where the new content will be appended.
+ * @param {Object} option - Additional options for loading more content.
+ */
 function scrollLoader(url, container, option) {
 
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -103,7 +126,15 @@ function scrollLoader(url, container, option) {
     }
 }
 
-// for delete popup param
+/**
+ * Generates a delete confirmation pop-up with the appropriate URL and parameters.
+ *
+ * @param {string} url - The base URL for the delete action.
+ * @param {Object} options - Additional options for the delete action.
+ *   @property {string} id - The ID of the item to be deleted.
+ *   @property {string} img - (Optional) The URL of an image associated with the item.
+ */
+
 // {"id":"$cat_id", "img":"$auth_img"}
 function deletePop(url, options) {
     // get the id
@@ -118,7 +149,15 @@ function deletePop(url, options) {
     }
 }
 
-// to search for any thing : author , publisher and category
+/**
+* Performs a search operation and updates the search results on the page.
+*
+* @param {string} searchText - The text to search for.
+* @param {string} url - The URL for the search operation.
+* @param {Object} options - Additional options for the search operation.
+*   @property {string} key - (Optional) Additional key or identifier for the search.
+*/
+
 function search(searchText, url, options) {
 
     if (searchText != '') {
@@ -151,7 +190,11 @@ function search(searchText, url, options) {
 
 }
 
-// to display redirect seconds
+/**
+ * Decrement a timer and redirect to a specified URL when the timer reaches zero.
+ *
+ * @param {string} url - The URL to redirect to when the timer reaches zero.
+ */
 function myTimer(url) {
     --second;
     $('#second').text(second);
@@ -161,7 +204,9 @@ function myTimer(url) {
     }
 }
 
-// to call function only when page loaded
+/**
+ * Document ready event handler for the entire page.
+ */
 $(document).ready(function () {
     // make the width of search result equal to search input
     $('#result_list').width($('.search').width());
@@ -353,7 +398,12 @@ $(document).ready(function () {
 });
 // ************** upload page *********************
 
-//show alert message function
+/**
+ * Displays an alert message with the specified content and alert style.
+ *
+ * @param {string} message - The message content to display in the alert.
+ * @param {string} alert - The style of the alert (e.g., 'success', 'warning', 'danger').
+ */
 function show_alert(message, alert) {
     $('#alert_wrapper').html(
         '<div class="alert alert-' + alert + ' alert-dismissible fade show" role="alert" >' +
@@ -362,7 +412,12 @@ function show_alert(message, alert) {
     );
 };
 
-// to check file extension
+/**
+ * Validates the chosen file for upload, checking its file extension.
+ *
+ * @param {string} bookName - The name of the chosen file, including its extension.
+ * @returns {boolean} Returns true if the file extension is allowed, otherwise returns false.
+ */
 function validate_file(bookName) {
     // allowed book extension
     var allowExtension = ['pdf', 'doc', 'docx'];
@@ -386,7 +441,11 @@ function validate_file(bookName) {
     checkBookExist(bookName);
 }
 
-//check book if exist in server before uploading
+/**
+ * Checks if a book with the given name exists on the server.
+ *
+ * @param {string} bookName - The name of the book file to check for existence.
+ */
 function checkBookExist(bookName) {
     $.ajax({
         type: "HEAD",
@@ -405,7 +464,13 @@ function checkBookExist(bookName) {
     });
 }
 
-//check author photo if exist in server before uploading
+/**
+ * Checks if the selected file exists on the server and validates its file extension.
+ *
+ * @param {HTMLInputElement} filed - The input element for file selection.
+ * @param {string} type - The type of file being checked (e.g., 'pdf', 'image').
+ * @returns {boolean} Returns true if the file extension is allowed and the file doesn't exist on the server, otherwise returns false.
+ */
 function checkFileExist(filed, type) {
     // allowed book extension
     var allowExtension = ['png', 'jpg', 'jpeg'];
@@ -440,7 +505,11 @@ function checkFileExist(filed, type) {
     });
 }
 
-// to change display author or book profile image after select a photo
+/**
+ * Displays a preview of a selected photo in an HTML element.
+ *
+ * @param {File} file - The File object representing the selected photo.
+ */
 function photoPreview(file) {
 
     if (file) {
@@ -452,7 +521,10 @@ function photoPreview(file) {
     }
 }
 
-// to upload the book
+/**
+ * Handles the upload process for a book file.
+ * Validates user inputs, prepares and sends the file data to the server, and displays progress and status messages.
+ */
 function upload() {
     //check if book id have value and it is a number
     if (!$('#book_id').val() || !$.isNumeric($('#book_id').val())) {
@@ -516,7 +588,12 @@ function upload() {
     )
 }
 
-// progress bar
+/**
+ * Updates the progress bar and status label during the file upload process.
+ *
+ * @param {number} current - The current amount of data uploaded.
+ * @param {number} total - The total amount of data to be uploaded.
+ */
 function Progress(current, total) {
     // get the total uploaded percentage
     var percent = ((current / total) * 100).toFixed(0) + "%";
@@ -530,7 +607,9 @@ function Progress(current, total) {
     }
 }
 
-//run before upload is made
+/**
+ * Performs pre-upload tasks such as disabling UI elements and showing loading indicators.
+ */
 function beforeSend() {
     //to disable choose file, and sponsor list:: while uploading file
     $("#fileToUpload").prop("disabled", true);
@@ -541,7 +620,9 @@ function beforeSend() {
     $('#cancel_btn').removeClass("d-none");
 }
 
-//to rest input after uploading
+/**
+ * Resets input elements and UI elements to their initial state after completing the file upload process.
+ */
 function reset_input() {
     $('#fileToUpload').val('');
     //to enable choose file
@@ -556,7 +637,13 @@ function reset_input() {
     $('#progress_load').attr("style", "width: 0%")
 }
 
-// loan Validation
+/**
+ * Performs validation on a selected option in a dropdown (select) element and displays an error message if necessary.
+ *
+ * @param {string} $select - The selector for the dropdown (select) element to validate against.
+ * @param {string} $filed - The selector for the field containing the selected option.
+ * @param {string} $div - The selector for the HTML element where the error message will be displayed.
+ */
 function checkSelectData($select, $filed, $div) {
     //get id of select
     var class_name = $filed;
@@ -581,7 +668,14 @@ function checkSelectData($select, $filed, $div) {
     });
 }
 
-//  all filed Validation
+/**
+ * Performs validation on an input field and displays an error message if necessary.
+ *
+ * @param {string} $select - The selector for the select element related to the field.
+ * @param {string} $filed - The selector for the input field to validate.
+ * @param {string} $div - The selector for the HTML element where the error message will be displayed.
+ * @param {string} [oldAuthorName=''] - (Optional) The old value of the input field, used for comparison to determine if validation is necessary.
+ */
 function checkField($select, $filed, $div, oldAuthorName = '') {
     //get id of input
     var class_name = $filed;
@@ -605,7 +699,14 @@ function checkField($select, $filed, $div, oldAuthorName = '') {
         });
     }
 }
-// signup Validation
+
+/**
+ * Performs validation on a signup input field and displays an error message if necessary.
+ *
+ * @param {string} $select - The selector for the select element related to the field.
+ * @param {string} $filed - The selector for the signup input field to validate.
+ * @param {string} $div - The selector for the HTML element where the error message will be displayed.
+ */
 function checkSignupField($select, $filed, $div) {
     //get id of input
     var class_name = $filed;
@@ -626,6 +727,7 @@ function checkSignupField($select, $filed, $div) {
         }
     });
 }
+
 /**
  * Function to check date conditions and display error messages.
  *
@@ -681,7 +783,14 @@ function checkDate(first_date, last_date) {
 }
 
 
-// to check the author name and category name is not repeated
+/**
+ * Performs validation on a name input field and displays an error message if necessary.
+ *
+ * @param {string} url - The URL to send the validation request to.
+ * @param {Object} param - The parameters to include in the validation request.
+ * @param {jQuery} filed - The jQuery selector for the input field to validate.
+ * @param {string} [oldAuthorName=''] - (Optional) The old value of the input field, used for comparison to determine if validation is necessary.
+ */
 function checkName(url, param, filed, oldAuthorName) {
 
     var condition = (oldAuthorName) ? (filed.val().trim() != oldAuthorName) : filed.val();
@@ -705,13 +814,23 @@ function checkName(url, param, filed, oldAuthorName) {
     }
 }
 
-//to read more function
+/**
+ * Toggles the visibility of content and updates the text of a "Read More" button.
+ */
 function readMore() {
     $('.more-btn').slideToggle();
     $('.more-btn').html($('.more-btn').html == 'readMore' ? 'readLess' : 'readMore');
 }
 
-//auto complete of advance search page
+/**
+ * Performs auto-completion and validation on an input field with a provided datalist.
+ *
+ * @param {string} $table - The name of the database table to search for suggestions.
+ * @param {string} $filed - The name of the field in the database to search for suggestions.
+ * @param {string} $value - The selector for the input field to autocomplete and validate.
+ * @param {string} $datalist - The selector for the datalist element associated with the input field.
+ * @param {string} $error - The selector for the HTML element where the error message will be displayed.
+ */
 function autoCompleteField($table, $filed, $value, $datalist, $error) {
     //get id of input
     var class_name = $value;
@@ -741,7 +860,10 @@ function autoCompleteField($table, $filed, $value, $datalist, $error) {
     });
 }
 
-// to  make  multi part
+/**
+ * Generates a dynamic set of input fields for book parts based on the specified number of parts.
+ * Validates the number of parts and displays error messages if necessary.
+ */
 function howParts() {
     var part_no = $('#part_no').val();
     if (part_no == '') {
@@ -828,7 +950,12 @@ function howParts() {
     // alert();
 }
 
-//add a temporary image to 'book' and 'author' images if the image is not loaded correctly
+/**
+ * Event listener for handling broken or missing images before they are unveiled (lazy-loaded).
+ * It sets appropriate fallback images based on the context specified in the data-image-context attribute.
+ *
+ * @param {Event} e - The lazybeforeunveil event.
+ */
 document.addEventListener("lazybeforeunveil", function (e) {
     var img = e.target;
 
