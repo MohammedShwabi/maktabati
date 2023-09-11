@@ -315,7 +315,7 @@ $(document).ready(function () {
     // create a MutationObserver instance
     var observer = new MutationObserver((mutation) => {
 
-        var hasFeedback;
+        var hasFeedback = false;
         // check if any invalid-feedback is visible
         $(".invalid-feedback:visible").each(function () {
             if ($(this).text().trim().length !== 0) {

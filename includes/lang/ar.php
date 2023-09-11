@@ -279,7 +279,7 @@ function lang($phrase)
     'fill_all_filled'                        => 'يجب ملى جميع الحقول الالزامية',
     'author_date_error'                        => 'لايمكن ان يكون تاريخ الوفاه قبل او يساوي تاريخ الميلاد',
 
-    // author_edit.php
+    // edit_author.php
     'edit_author'                           => 'تعديل المؤلف',
     'edit_author_success'                        => 'تم تعديل المؤلف بنجاح ',
     'edit_author_fail'                        => 'فشل تعديل المؤلف',

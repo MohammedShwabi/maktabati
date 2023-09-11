@@ -33,6 +33,7 @@ body {
 
 a {
     text-decoration: none;
+    color: var(--blue-color);
 }
 
 /************** Start header.php **************/

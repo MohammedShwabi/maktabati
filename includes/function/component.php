@@ -116,7 +116,7 @@ function author($author_id, $author_name, $author_img, $book_no, $delete_fun)
                         <i class="fa-duotone fa-trash"></i>
                     </a>
                 </li>
-                <li><a style="border: 1px solid" id="edit_icon" href="author_edit.php?auth=' . $author_id . '" data-tip="' . lang('edit_auth') . '" onclick="event.stopPropagation();"><i class="fa-duotone fa-pen"></i></a></li>
+                <li><a style="border: 1px solid" id="edit_icon" href="edit_author.php?auth=' . $author_id . '" data-tip="' . lang('edit_auth') . '" onclick="event.stopPropagation();"><i class="fa-duotone fa-pen"></i></a></li>
             </ul>
         </div>
     </div>

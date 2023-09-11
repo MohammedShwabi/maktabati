@@ -113,7 +113,7 @@ if (
             $book_id = $output["book_id"];
             $book_img = $output["photo"];
             // make delete icon function
-            $delete_fun = " onclick=\"deletePop('book_delete.php', {'id':'$book_id', 'img':'$book_img'} )\" ";
+            $delete_fun = " onclick=\"deletePop('delete_book.php', {'id':'$book_id', 'img':'$book_img'} )\" ";
 
             // initialize var
             $author = array(

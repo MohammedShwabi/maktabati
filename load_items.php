@@ -100,7 +100,7 @@ function get_fun($type, $output)
                 "delete_txt" => lang('delete_cat'),
             );
             // make delete icon function
-            $delete_fun = " onclick=\"deletePop('category_delete.php', {'id':'$cat_id'} ); event.stopPropagation();\" ";
+            $delete_fun = " onclick=\"deletePop('delete_category.php', {'id':'$cat_id'} ); event.stopPropagation();\" ";
 
             category($output["book_no"], $category, $delete_fun);
             break;
@@ -117,7 +117,7 @@ function get_fun($type, $output)
                 "delete_txt" => lang('delete_pub'),
             );
             // make delete icon function
-            $delete_fun = " onclick=\"deletePop('publisher_delete.php', {'id':'$pub_id'} ); event.stopPropagation();\" ";
+            $delete_fun = " onclick=\"deletePop('delete_publisher.php', {'id':'$pub_id'} ); event.stopPropagation();\" ";
 
             category($output["book_no"], $publisher, $delete_fun);
             break;
@@ -127,7 +127,7 @@ function get_fun($type, $output)
             $auth_id = $output["author_id"];
             $auth_img = $output["author_img"];
             // make delete icon function
-            $delete_fun = " onclick=\"deletePop('author_delete.php', {'id':'$auth_id', 'img':'$auth_img'} ); event.stopPropagation();\" ";
+            $delete_fun = " onclick=\"deletePop('delete_author.php', {'id':'$auth_id', 'img':'$auth_img'} ); event.stopPropagation();\" ";
             author($auth_id, $output["author_name"], $auth_img, $output["book_no"], $delete_fun);
             break;
 
@@ -136,7 +136,7 @@ function get_fun($type, $output)
             $book_id = $output["book_id"];
             $book_img = $output["photo"];
             // make delete icon function
-            $delete_fun = " onclick=\"deletePop('book_delete.php', {'id':'$book_id', 'img':'$book_img'} )\" ";
+            $delete_fun = " onclick=\"deletePop('delete_book.php', {'id':'$book_id', 'img':'$book_img'} )\" ";
             // initialize var
             $author = array(
                 "name" => $output["author_name"],
