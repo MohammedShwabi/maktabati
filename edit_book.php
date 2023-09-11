@@ -63,7 +63,7 @@ if (count($row) > 0) {
                 <div class="text-center mt-3 mb-5">
                     <label for="book_photo" class="profile-upload">
                         <div class="profile-container">
-                            <img src="img/book_upload.svg" alt="author image" id="profile_img">
+                            <img src="upload/books/<?= $row['photo'] ?>"alt="author image" id="profile_img">
                         </div>
                         <div class="camera-icon d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-camera-circle"></i>
@@ -88,6 +88,7 @@ if (count($row) > 0) {
                         <div class="mt-3 text-end">
                             <label for="book_sub_title" class="blue-text mb-2 me-4"><?= lang('book_sub_title'); ?></label>
                             <input value="<?php echo $row['subtitle'] ?>" class="form-control" type="text" id="book_sub_title" name="book_sub_title" placeholder="<?php echo lang('book_sub_title_place') ?>" autocomplete="off" required />
+
                         </div>
                     </div>
                 </div>
@@ -96,7 +97,7 @@ if (count($row) > 0) {
                 <div class="row">
                     <div class="mt-3 text-end">
                         <label for="book_description" class="blue-text mb-2 me-4"><?= lang('book_description'); ?></label>
-                        <textarea value="<?php echo $row['description'] ?>" class="form-control" id="book_description" name="book_description" rows="3" placeholder="<?php echo lang('book_description_place') ?>" autocomplete="off" required></textarea>
+                        <textarea class="form-control" id="book_description" name="book_description" rows="3" placeholder="<?php echo lang('book_description_place') ?>" autocomplete="off" required><?php echo $row['description']; ?></textarea>
                     </div>
                 </div>
 
@@ -106,12 +107,18 @@ if (count($row) > 0) {
                         <div class="mt-3 text-end">
                             <label for="category" class="blue-text mb-2 me-4"><?= lang('category'); ?></label>
                             <select class="form-control" id="category" name="category" required>
-                                <option value="" disabled selected><?= lang('select_category'); ?></option>
+                                <option value="" disabled><?= lang('select_category'); ?></option>
                                 <?php
+
                                 $cats = get_all_data("select * from categories");
                                 foreach ($cats as $cat) {
-                                    echo '<option value="' . $cat['cat_id'] . '">' . $cat['cat_name'] . '</option>';
+                                    echo '<option value="' . $cat['cat_id'] . '"';
+                                    if ($row['cat_id'] == $cat['cat_id']) {
+                                        echo  'selected';
+                                    }
+                                    echo '>' . $cat['cat_name'] . '</option>';
                                 }
+
                                 ?>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -136,7 +143,11 @@ if (count($row) > 0) {
                                 <?php
                                 $authors = get_all_data("select * from author");
                                 foreach ($authors as $author) {
-                                    echo '<option value="' . $author['author_id'] . '">' . $author['author_name'] . '</option>';
+                                    echo '<option value="' . $author['author_id'] . '"';
+                                    if ($row['cat_id'] == $author['author_id']) {
+                                        echo  'selected';
+                                    }
+                                    echo '>' . $author['author_name'] . '</option>';
                                 }
                                 ?>
                             </select>
@@ -148,10 +159,10 @@ if (count($row) > 0) {
                             <label for="work_on_book" class="blue-text mb-2 me-4"><?= lang('work_on_book'); ?></label>
                             <select class="form-control" id="work_on_book" name="work_on_book" required>
                                 <option value="" disabled selected><?= lang('select_work_on_book'); ?></option>
-                                <option value="1"><?= lang('authoring'); ?></option>
-                                <option value="2"><?= lang('translate'); ?></option>
-                                <option value="3"><?= lang('checking'); ?></option>
-                                <option value="4"><?= lang('reviewing'); ?></option>
+                                <option value="1" <?php echo ($row['work_id'] == 1) ?  'selected' : '' ?>> <?= lang('authoring'); ?></option>
+                                <option value="2" <?php echo ($row['work_id'] == 2) ?  'selected' : '' ?>><?= lang('translate'); ?></option>
+                                <option value="3" <?php echo ($row['work_id'] == 3) ?  'selected' : '' ?>><?= lang('checking'); ?></option>
+                                <option value="4" <?php echo ($row['work_id'] == 4) ?  'selected' : '' ?>><?= lang('reviewing'); ?></option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -168,7 +179,11 @@ if (count($row) > 0) {
                                 <?php
                                 $publishers = get_all_data("select * from publisher");
                                 foreach ($publishers as $pub) {
-                                    echo '<option value="' . $pub['pub_id'] . '">' . $pub['pub_name'] . '</option>';
+                                    echo '<option value="' . $pub['pub_id'] . '"';
+                                    if ($row['pub_id'] == $pub['pub_id']) {
+                                        echo  'selected';
+                                    }
+                                    echo '>' . $pub['pub_name'] . '</option>';
                                 }
                                 ?>
                             </select>
@@ -194,7 +209,11 @@ if (count($row) > 0) {
                                 <?php
                                 $langs = get_all_data(SELECT_LANG);
                                 foreach ($langs as $lang) {
-                                    echo '<option value="' . $lang['lang_id'] . '">' . $lang['lang_name'] . '</option>';
+                                    echo '<option value="' . $lang['lang_id'] . '"';
+                                    if ($row['lang_id'] == $lang['lang_id']) {
+                                        echo  'selected';
+                                    }
+                                    echo '>' . $lang['lang_name'] . '</option>';
                                 }
                                 ?>
                             </select>
@@ -229,7 +248,7 @@ if (count($row) > 0) {
                 </div>
 
                 <!-- Radio button for part or multi part -->
-                <div class="chose-how-part mt-4">
+                <!-- <div class="chose-how-part mt-4">
                     <span class="dark-blue-text">
                         <?php echo lang('is_book') ?>
                     </span>
@@ -245,10 +264,10 @@ if (count($row) > 0) {
                         </label>
                         <input class="form-check-input" type="radio" name="chose_part" value="multi" id="multi_parts">
                     </div>
-                </div>
+                </div> -->
 
                 <!-- one-part-container -->
-                <div class="one-part-container">
+                <!-- <div class="one-part-container">
                     <input class="form-control" type="hidden" id="part_number" name="part_number[]" value="1" />
                     <div class="row">
                         <div class="col-md-6">
@@ -301,10 +320,10 @@ if (count($row) > 0) {
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
                 <!-- multi-part-container -->
-                <div class="multi-part-container">
+                <!-- <div class="multi-part-container">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mt-3 text-end">
@@ -316,10 +335,10 @@ if (count($row) > 0) {
                     </div>
                     <div id="more_part">
                     </div>
-                </div>
+                </div> -->
 
                 <!-- series details -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-6">
                         <div class="mt-3 mb-2 text-end">
                             <div class="form-group">
@@ -358,10 +377,10 @@ if (count($row) > 0) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- attachment details -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-6">
                         <div class="mt-3 mb-3 text-end">
                             <div class="form-group">
@@ -371,9 +390,9 @@ if (count($row) > 0) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="attachment-group">
+                <!-- <div class="attachment-group">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mt-3 text-end">
@@ -400,12 +419,13 @@ if (count($row) > 0) {
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
                 <!-- buttons -->
                 <div class="modal-footer  mt-4 mb-2 justify-content-evenly">
-                    <button class="btn blue-btn add rounded-3 fw-bold" type="submit" id="submit"><?php echo lang('save') ?></button>
-                    <button class="btn blue-btn cancel me-auto rounded-3 fw-bold" onclick="window.location.href='index.php'"><?php echo lang('cancel') ?></button>
+                    <button class="btn blue-btn add rounded-3 fw-bold" type="submit" id="submit"><?php echo lang('update') ?></button>
+                    <button class="btn blue-btn cancel me-auto rounded-3 fw-bold" type="button" onclick="window.location.href='index.php'"><?php echo lang('cancel') ?></button>
+
                 </div>
             </div>
         </form>

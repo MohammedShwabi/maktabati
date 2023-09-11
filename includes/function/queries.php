@@ -290,12 +290,21 @@ define(
 //edit book
 define(
     "SELECT_BOOK_UPDATE",
-    "SELECT * FROM book WHERE book_id = ?"
-    // "SELECT publisher.* ,lang_publisher_rel.lang_id,language.*
-    // FROM publisher
-    // INNER JOIN lang_publisher_rel ON lang_publisher_rel.pub_id = publisher.pub_id
-    // INNER JOIN language ON language.lang_id = lang_publisher_rel.lang_id
-    // WHERE publisher.pub_id = ? "
+    // "SELECT * FROM book WHERE book_id = ?"
+    "SELECT book.* ,language.lang_name,language.lang_id,categories.cat_name,book_author_rel.work_on_book ,book_author_rel.work_id ,author.author_name ,publisher.pub_id,publisher.pub_name
+    FROM book
+    INNER JOIN lang_book_rel ON lang_book_rel.book_id = book.book_id
+    INNER JOIN language ON language.lang_id = lang_book_rel.lang_id
+    
+    INNER JOIN book_author_rel ON book_author_rel.book_id = book.book_id
+    INNER JOIN author ON author.author_id = book_author_rel.author_id
+    
+    INNER JOIN book_publisher_rel ON book_publisher_rel.book_id = book.book_id
+    INNER JOIN publisher ON publisher.pub_id = book_publisher_rel.pub_id
+    
+    INNER JOIN categories ON categories.cat_id = book.cat_id
+    WHERE book.book_id = ?
+    "
 );
 
 define(
