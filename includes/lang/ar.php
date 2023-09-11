@@ -329,6 +329,7 @@ function lang($phrase)
     'add_book_fail'                        => 'فشل إضافة الكتاب',
     'book_exist' => 'هذا الكتاب موجود مسبقا',
     'edition_desc_place' => 'منقحة',
+    'book_photo_required' => 'يرجى إضافة صورة الكتاب',
     
     // edit book page 
     'edit_book_title' => 'منقحة',

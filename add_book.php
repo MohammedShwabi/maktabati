@@ -64,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 throw new ErrorException(lang('author_photo_exists'));
             }
+        } else {
+            throw new ErrorException(lang('book_photo_required'));
         }
 
         // validate post param
