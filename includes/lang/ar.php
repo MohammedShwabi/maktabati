@@ -181,6 +181,7 @@ function lang($phrase)
     'redirect_after' => ' سيتم تحويلك بعد ',
     'second' => ' ثواني ...',
     'redirect_search_message'              => 'يجب عليك البحث عن كتاب للوصول الى هذه الصفحة',
+    'redirect_book_message'                 => 'يجب إختيار كتاب للوصول الى هذه الصفحة',
     'redirect_pub_message'                 => 'يجب إختيار دار نشر للوصول الى هذه الصفحة',
     'redirect_cat_message'                 => 'يجب إختيار قسم للوصول الى هذه الصفحة',
     'redirect_auth_message'                => 'يجب إختيار مؤلف للوصول الى هذه الصفحة',
@@ -328,6 +329,10 @@ function lang($phrase)
     'add_book_fail'                        => 'فشل إضافة الكتاب',
     'book_exist' => 'هذا الكتاب موجود مسبقا',
     'edition_desc_place' => 'منقحة',
+    
+    // edit book page 
+    'edit_book_title' => 'منقحة',
+    
 
 
     'no_connection_error' => 'عذرا تاكد من اتصالك بقواعد البيانات وحاول مرة اخرى',

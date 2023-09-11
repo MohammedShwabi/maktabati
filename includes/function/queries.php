@@ -287,6 +287,16 @@ define(
     INNER JOIN language ON language.lang_id = lang_publisher_rel.lang_id
     WHERE publisher.pub_id = ? "
 );
+//edit book
+define(
+    "SELECT_BOOK_UPDATE",
+    "SELECT * FROM book WHERE book_id = ?"
+    // "SELECT publisher.* ,lang_publisher_rel.lang_id,language.*
+    // FROM publisher
+    // INNER JOIN lang_publisher_rel ON lang_publisher_rel.pub_id = publisher.pub_id
+    // INNER JOIN language ON language.lang_id = lang_publisher_rel.lang_id
+    // WHERE publisher.pub_id = ? "
+);
 
 define(
     "EDIT_PUB",
