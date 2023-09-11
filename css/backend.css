@@ -1230,3 +1230,54 @@ input[type="radio"]:checked+.face {
     margin-left: 1.5em;
     margin-top: -1em;
 }
+/*********************** start of advance search style **************/
+.input-container {
+    position: relative;
+    height: 7rem;
+    width: 7rem;
+    margin: 1.5rem auto;
+}
+
+.input-container input {
+    opacity: 0;
+}
+
+.input-container .radio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border: 2px solid var(--blue-color);
+    border-radius: 8px;
+    transition: all 300ms ease;
+    cursor: pointer;
+}
+
+.input-container i {
+    color: var(--blue-color);
+    font-size: 3rem;
+}
+
+.input-container span {
+    color: var(--blue-color);
+    font-size: 0.80rem;
+    font-weight: 600;
+    margin: 5px;
+}
+
+input:checked+.radio-tile {
+    background-color: var(--blue-color);
+    box-shadow: 0 0 12px var(--blue-color);
+    transform: scale(1.1);
+}
+
+input:hover+.radio-tile {
+    box-shadow: 0 0 12px var(--blue-color);
+}
+
+input:checked+.radio-tile i,
+input:checked+.radio-tile span {
+    color: white;
+}
+/*********************** end of advance search style **************/

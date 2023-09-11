@@ -59,7 +59,7 @@ function lang($phrase)
     'language'                             => 'اللغة',
     'publisher'                            => 'دار النشر',
     'isbn'                                 => 'الترقيم الدولي',
-    'category'                             => 'الموضوع | القسم ',
+    'category'                             => 'القسم',
     'series_name'                          => 'اسم السلسة',
     'dewyNo'                               => 'التصنيف الديوي',
 
