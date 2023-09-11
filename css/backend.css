@@ -624,49 +624,53 @@ nav {
 
 /****************** end of search  ****************/
 /************ Start style of Add Bottom ***********/
-
-.add-btn {
-    background-color: var(--blue-color);
-    color: white;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 1.5rem;
-    border: 1px solid transparent;
-    box-shadow: 1px 1px 1px 1px lightgray;
-}
-
-.add-btn-small {
-    height: 45px;
-    width: 45px;
-    border-radius: 22.5px;
-    display: none;
-}
-
-.add-btn-big {
-    height: 45px;
-}
-
-@media (max-width: 1000px) {
-    .add-btn-big {
-        display: none;
-    }
-
-    .add-btn-small {
-        display: inline-block;
-    }
-}
-
-.btn-line {
-    border-left: 2px solid rgb(255, 255, 255);
-    height: 15px;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
 .add-btn-div {
     position: fixed;
     bottom: 20vh;
     right: 5vw;
+}
+
+.add-btn {
+    height: 45px;
+    width: 45px;
+    border-radius: 22.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--blue-color);
+    color: white;
+    font-size: 1.5rem;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 1px 1px lightgray;
+    transition: width 0.2s ease-in-out, padding 0.2s ease-in-out, border 0.2s ease-in-out;
+    overflow: hidden;
+}
+
+/* Expand the button on hover */
+.add-btn:hover {
+    width: auto;
+    padding: 0 15px;
+}
+
+/* Hide the text initially */
+.add-btn span {
+    display: none;
+}
+
+/* Show the text on hover */
+.add-btn:hover span {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@media (max-width: 1000px) {
+    .add-btn:hover span {
+        display: none;
+    }
+    .add-btn:hover {
+        width: 45px;
+    }
 }
 
 /************ End style of Add Bottom ************/
@@ -1231,6 +1235,7 @@ input[type="radio"]:checked+.face {
     margin-left: 1.5em;
     margin-top: -1em;
 }
+
 /*********************** start of advance search style **************/
 .input-container {
     position: relative;
@@ -1281,4 +1286,5 @@ input:checked+.radio-tile i,
 input:checked+.radio-tile span {
     color: white;
 }
+
 /*********************** end of advance search style **************/

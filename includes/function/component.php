@@ -211,17 +211,12 @@ function sticky_button($name, $action, $pop = '')
 
     // Construct the HTML markup for the sticky button.
     $sticky_button = '
-    <div class="overflow-visible add-btn-div">
-        <button type="button" class="add-btn add-btn-big rounded-pill pe-3 ps-3" ' . $destination . ' >
+    <div class="add-btn-div">
+        <button type="button" class="add-btn rounded-pill" ' . $destination . ' >
+            <i class="fa-solid fa-plus"></i>
             <span>' . $name . '</span>
-            <div class="btn-line d-inline"></div>
-            <i class="fa-solid fa-plus"></i>
         </button>
-        <button type="button" class="add-btn add-btn-small" ' . $destination . ' >
-            <i class="fa-solid fa-plus"></i>
-        </button>
-    </div>
-    ';
+    </div>';
 
     // Echo the generated HTML markup for the sticky button.
     echo $sticky_button;
