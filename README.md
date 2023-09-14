@@ -64,7 +64,7 @@ You can easily add, delete, and edit both books, authors, and categories, making
 
 ![books list page][books-screenshot]
 
-<b>categories List Page:</b>
+<b>Categories List Page:</b>
 
 ![categories list page][categories-screenshot]
 
@@ -95,7 +95,7 @@ Before you begin, ensure you have met the following requirements:
 - **PHP** (>= 8.2.4) installed on your local machine.
 - **Apache** (>= 2.4.56) installed and configured.
 - **MySQL** (>= 8.2.4) or MariaDB database server.
-- **Git**: You'll need Git to clone the repository.
+- **Git** You'll need Git to clone the repository.
 
 <!-- :checkered_flag: -->
 ## 🏁 Getting Started <a name = "getting_started"></a>
@@ -174,9 +174,7 @@ While the current version of Maktabati is functional, there are several areas wh
 - 🌐 Auto-complete advanced search functionality.
 - 👥 User management system.
 - 👤 User pages and user profiles.
-- 🌍 Support for multiple languages for books.
-- 🌍 Support for multiple languages for authors.
-- 🌍 Support for multiple languages for publishers.
+- 🌍 Support for multiple languages for books, authors and publishers.
 - 🧹 Sorting and filtering options for books.
 - 👥 Ability to associate multiple authors with a book.
 
