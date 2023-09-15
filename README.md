@@ -138,7 +138,8 @@ Replace "/path/to/maktabati" with the actual path to your project directory.
 ```sql
 CREATE DATABASE maktabati;
 ```
-2. Import the 'maktabati.sql' file into your newly created database. You can do this using the command-line MySQL client:
+<!-- [Hekayti-Api-Documentation.xlsx](HekaytiApiDocumentationAndCollection/Hekayti-Api-Documentation.xlsx) -->
+2. Import the [`maktabati.sql`](maktabati.sql) file into your newly created database. You can do this using the command-line MySQL client:
 
 ```bash
 mysql -u your_username -p maktabati < maktabati.sql
