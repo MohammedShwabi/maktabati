@@ -28,7 +28,7 @@ function book($book_img, $book_id, $title, $rating, $delete_fun, $section)
         <div class="book-teaser d-grid h-100 text-center bg-white border rounded position-relative">
             <a title="' . $title . '" href="book_details.php?book_id=' . $book_id . '" class="d-inline-block">
                 <div class="book-image">
-                    <img class="img lazyload border rounded mw-100 h-auto" width="160px" height="200px" data-image-context="book" title="' . $title . '" alt="' . $title . '" data-src="upload/books/' . $book_img . '">
+                    <img class="img lazyload border rounded mw-100 h-auto" width="160px" height="200px" title="' . $title . '" alt="' . $title . '" data-src="upload/books/' . $book_img . '">
                 </div>
             </a>
             <ul class="book-links">
@@ -105,7 +105,7 @@ function author($author_id, $author_name, $author_img, $book_no, $delete_fun)
         onclick="window.location.href = \'author_section.php?auth=' . $author_id . '\'" title="' . $author_name . '" role="button">
             <div class="book-result mt-0">
                 <div class="writer-avatar d-flex justify-content-center">
-                    <img class="img lazyload media-object" width="auto" height="auto" data-image-context="author" title="' . $author_name . '" alt="' . $author_name . '" data-src="upload/authors/' . $author_img . '">
+                    <img class="img lazyload media-object" width="auto" height="auto" title="' . $author_name . '" alt="' . $author_name . '" data-src="upload/authors/' . $author_img . '">
                 </div>
                 <h3>' . $author_name . '</h3>
                 <p><span><i class="fa-duotone fa-books" style="color: #207ABF;"></i> ' . $book_no . '</span> ' . lang("book") . '</p>

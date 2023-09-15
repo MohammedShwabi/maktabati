@@ -171,7 +171,6 @@ password: 123
 
 While the current version of Maktabati is functional, there are several areas where the project can be further developed and enhanced:
 
-- 🌐 Auto-complete advanced search functionality.
 - 👥 User management system.
 - 👤 User pages and user profiles.
 - 🌍 Support for multiple languages for books, authors and publishers.
