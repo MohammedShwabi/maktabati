@@ -9,24 +9,25 @@ if (!isset($_SESSION['UserEmail'])) {
     redirect_user();
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     redirect_user("", 0, "advance_search.php");
 }
 
 //check if variables is not empty
-if (empty($_POST["search_input"]) || empty($_POST["search_option"])) {
+if (empty($_GET["search_input"]) || empty($_GET["search_option"])) {
     //print empty message
-    echo "<br><br><br> <div class='alert alert-danger text-center fw-bold'>" . lang('input_search_empty') . "</div>";
+    redirect_user(lang('input_search_empty'), 5, "advance_search.php");
 } else {
     //filter all element
-    $search_input          = filter_input(INPUT_POST, 'search_input', FILTER_SANITIZE_SPECIAL_CHARS);
-    $search_option         = filter_input(INPUT_POST, 'search_option', FILTER_SANITIZE_SPECIAL_CHARS);
+    $search_input          = filter_input(INPUT_GET, 'search_input', FILTER_SANITIZE_SPECIAL_CHARS);
+    $search_option         = filter_input(INPUT_GET, 'search_option', FILTER_SANITIZE_SPECIAL_CHARS);
 
     //get the matching data from DB
     $results = 0;
     // $sql = "Select * From advance_search Where " . rtrim($search_option) . " Like % " . $search_input . "%";
 
     $sql = "SELECT * FROM advance_search WHERE $search_option LIKE ?";
+    $search_input = trim($search_input);
     $searchTerm = '%' . $search_input . '%';
     $results = get_all_data($sql, [$searchTerm]);
 

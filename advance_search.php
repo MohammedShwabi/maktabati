@@ -18,7 +18,7 @@ if (!isset($_SESSION['UserEmail'])) {
             </div>
         </div>
 
-        <form name="advance_search" action="search_result.php" method="POST">
+        <form name="advance_search" action="search_result.php" method="GET">
             <!-- search text -->
             <div class="row align-content-center justify-content-center mt-5 mb-2">
                 <div class="form-group col-lg-8 col-md-8 col-sm-8">
