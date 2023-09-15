@@ -8,6 +8,141 @@ echo '<br><br><br><br><br>';
 if (!isset($_SESSION['UserEmail'])) {
     redirect_user();
 }
+// File upload path
+$upload_dir = "upload/books/";
+
+// insert and upload status code
+$insert_status = -1;
+$uploadImgStatus = -1;
+
+//check if method is post 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    global $con;
+    try {
+        //start transaction
+        $con->beginTransaction();
+        //check from all list
+        if (
+            !isset($_POST['category']) || !isset($_POST['author_name']) || !isset($_POST['work_on_book'])
+            || !isset($_POST['publisher']) || !isset($_POST['language'])
+        ) {
+            throw new ErrorException(lang('still_one_choses_empty'));
+        }
+
+        // // validate profile img
+        // if (
+        //     !empty($_FILES["book_photo"]["name"])
+        // ) {
+        //     // File upload name
+        //     $book_photo = basename($_FILES["book_photo"]["name"]);
+
+        //     // File upload path 
+        //     $target_file = $upload_dir . $book_photo;
+
+        //     //check if the file name is not repeated
+        //     if (!file_exists($target_file)) {
+        //         //allowed file extension
+        //         $allow_types = array('png', 'jpeg', 'jpg');
+        //         // get uploaded file's extension
+        //         $file_extension = strtolower(pathinfo($book_photo, PATHINFO_EXTENSION));
+        //         // Check whether file type is valid  
+        //         if (in_array($file_extension, $allow_types)) {
+        //             // Upload file to server  
+        //             if (move_uploaded_file($_FILES["book_photo"]["tmp_name"], $target_file)) {
+        //                 $uploadImgStatus = 1;
+        //             } else {
+        //                 throw new ErrorException(lang('author_error_uploading'));
+        //             }
+        //         } else {
+        //             throw new ErrorException(lang('not_allowed') . join(", ", $allow_types));
+        //         }
+        //     }
+        //     else{
+        //         $uploadImgStatus = 1;
+        //     } 
+        // }
+
+        // validate post param
+        $book_title           = filter_var(strip_tags($_POST['book_title']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $book_sub_title       = filter_var(strip_tags($_POST['book_sub_title']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $book_description     = filter_var(strip_tags($_POST['book_description']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $category             = filter_var(strip_tags($_POST['category']), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $dewyNo               = filter_var(strip_tags($_POST['dewyNo']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $author_name            = filter_var(strip_tags($_POST['author_name']), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $work_id              = filter_var(strip_tags($_POST['work_on_book']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $publisher            = filter_var(strip_tags($_POST['publisher']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $publish_place        = filter_var(strip_tags($_POST['publish_place']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $language             = filter_var(strip_tags($_POST['language']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $isbn                 = filter_var(strip_tags($_POST['isbn']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+        $depository_no        = filter_var(strip_tags($_POST['depository_no']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE) ?? NULL;
+
+        //check all required field 
+        if (
+            $uploadImgStatus != 1 ||
+            empty($book_title) || empty($book_sub_title) || empty($book_description) || empty($category) || empty($dewyNo)  || empty($author_id)
+            || empty($work_id) || empty($publish_place) || empty($language)
+        ) {
+            throw new ErrorException(lang('login_empty'));
+        } else {
+            //insert into book table
+            $sql_insert_book = insert_data(UPDATE_BOOK_INFO, [$book_title, $book_sub_title, $book_photo, $book_description, $depository_no, $isbn, $dewyNo, 3, $publish_place, $category]);
+
+            //to get last id of book table to use it more than once
+            $get_last_id = get_data("Select max(book_id) from book");
+            $book_id = $get_last_id['max(book_id)'];
+
+            //to insert work on book
+            $work_on_book = "";
+            switch ($work_id) {
+                case 1:
+                    $work_on_book = lang('authoring');
+                    break;
+                case 2:
+                    $work_on_book = lang('translate');
+                    break;
+                case 3:
+                    $work_on_book = lang('checking');
+                    break;
+                default:
+                    $work_on_book = lang('reviewing');
+                    break;
+            }
+
+            //insert into book_author_rel table
+            // $sql_insert_book_author_rel =  insert_data(INSERT_BOOK_AUTHOR_REL, [$work_on_book, $work_id, $book_id, $author_id]);
+
+            //insert into book_lang_rel table
+            // $sql_insert_book_lang_rel = insert_data(INSERT_BOOK_LANG_REL, [$language, $book_id]);
+
+            //insert into book_pub_rel table
+            // $sql_insert_book_pub_rel = insert_data(INSERT_BOOK_PUB_REL, [$book_id, $publisher]);
+
+           
+
+        }
+
+        //commit all queries
+        $con->commit();
+
+        //print success message
+        $statusMsg = lang("add_book_success");
+        $msgContainer = "alert-success";
+
+        redirect_user(lang('publish_edit_success'), 5, "publishers.php", "info");
+
+    } catch (ErrorException $e) {
+        //rollback if any error happened  with custom error msg
+        $con->rollBack();
+        $msgContainer = "alert-danger";
+        $statusMsg = $e->getMessage();
+    } catch (Exception $e) {
+        //rollback if any error happened 
+        $con->rollBack();
+        $msgContainer = "alert-danger";
+        $statusMsg = lang("unexpected_error");
+    }
+}
+
 // validate get param
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (!filter_input(INPUT_GET, 'book', FILTER_VALIDATE_INT)) {
@@ -15,9 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     $book_id = filter_input(INPUT_GET, 'book', FILTER_VALIDATE_INT);
 }
-echo $book_id;
+// echo $book_id;
 
-$row = get_data(SELECT_BOOK_UPDATE, [$book_id]);
+$row = get_data(SELECT_BOOK_UPDATE, [1]);
 if (count($row) > 0) {
     var_dump($row);
 ?>

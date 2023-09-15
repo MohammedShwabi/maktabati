@@ -29,6 +29,7 @@ $container_id = "author_container";
 container_site($container_id);
 
 // Sticky Button
+// sticky_button(lang("add_author"), "author/add_author.php");
 sticky_button(lang("add_author"), "add_author.php");
 
 if (empty($search_val)) {

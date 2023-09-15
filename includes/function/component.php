@@ -36,7 +36,7 @@ function book($book_img, $book_id, $title, $rating, $delete_fun, $section)
                         <i class="fa-duotone fa-trash"></i>
                     </a>
                 </li>
-                <li><a id="edit_icon" href="edit_book.php?book=' . $book_id . '" data-tip="' . lang('edit_book') . '"><i class="fa-duotone fa-pen"></i></a></li>
+                <li><a id="edit_icon" href="edit_book_test.php?book=' . $book_id . '" data-tip="' . lang('edit_book') . '"><i class="fa-duotone fa-pen"></i></a></li>
             </ul>
             <h3 class="book-title fs-6 my-2 text-center lh-base">
                 <a class="text-decoration-none" title="' . $title . '" href="book_details.php?book_id=' . $book_id . '">' . $title . '</a>

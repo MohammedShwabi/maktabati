@@ -372,3 +372,22 @@ define(
     "SELECT_BOOK_NAME",
     "SELECT title from book where title like ? "
 );
+
+define(
+    "UPDATE_BOOK_INFO",
+    "UPDATE `book`
+    SET 
+        `title` = ?,
+        `subtitle` = ?,
+        `photo` = ?,
+        `description` = ?,
+        `depository_no` = ?,
+        `isbn` = ?,
+        `dewey_no` = ?,
+        `rating` = ?,
+        `publication_place` = ?,
+        `cat_id` = ?
+    WHERE
+        `book_id` = ?;
+    "
+);

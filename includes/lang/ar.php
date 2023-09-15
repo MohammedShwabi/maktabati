@@ -333,6 +333,7 @@ function lang($phrase)
     
     // edit book page 
     'edit_book_title' => 'منقحة',
+    'edit_book_test' => 'سيتم تجهيز تعديل الكتاب قريبا',
     
 
 
