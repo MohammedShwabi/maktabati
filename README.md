@@ -180,6 +180,12 @@ While the current version of Maktabati is functional, there are several areas wh
 
 If you are interested in contributing to the project, consider working on these future enhancements to make Maktabati even better!
 
+## 📱 Mobile App
+A mobile app version of maktabati is also available. You can find the mobile app implementation of this project on GitHub:
+
+- [Maktabati Mobile App Repository](https://github.com/almomyz/maktabati)
+
+The mobile app complements the web project and extends its functionality to mobile devices, providing a seamless user experience across platforms. Feel free to check it out and contribute to both the web and mobile versions of maktabati!
 
 <!-- :raised_hands: -->
 ## 🙌 Contributing <a name = "contributing"></a>
