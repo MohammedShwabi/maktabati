@@ -3,7 +3,7 @@
  <img src="img/logo.png" alt="Logo" height="100"></a>
 </p>
 
-<h3 align="center">maktabati</h3>
+<h1 align="center">maktabati</h1>
 
 <div align="center">
 
