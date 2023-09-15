@@ -947,30 +947,4 @@ function howParts() {
         $("#no_part_check").text("فقط الارقام من 1 الى 20 ممكنه لعدد الاجزاء ");
         $("#more_part").html("");
     }
-    // alert();
 }
-
-/**
- * Event listener for handling broken or missing images before they are unveiled (lazy-loaded).
- * It sets appropriate fallback images based on the context specified in the data-image-context attribute.
- *
- * @param {Event} e - The lazybeforeunveil event.
- */
-document.addEventListener("lazybeforeunveil", function (e) {
-    var img = e.target;
-
-    // Determine the context of the image
-    var imageContext = img.getAttribute("data-image-context");
-
-    // Define different fallback images based on context
-    var fallbackImagePaths = {
-        book: "img/book_upload.svg",
-        author: "upload/authors/auth_temp.svg",
-    };
-
-    // Handle the broken image here
-    img.addEventListener("error", function () {
-        // Set the src attribute to the appropriate fallback image path
-        img.src = fallbackImagePaths[imageContext];
-    });
-});
