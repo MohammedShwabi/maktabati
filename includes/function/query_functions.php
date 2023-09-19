@@ -196,3 +196,24 @@ function delete_item($sql, $id)
     // Prepare and execute the SQL statement with the provided ID.
     $con->prepare($sql)->execute([$id]);
 }
+
+
+function update_book($sql, $param = null) {
+    // Access the global database connection.
+    global $con;
+
+    // Trim any leading and trailing spaces from the parameters.
+    if ($param !== null) {
+        $param = array_map('trim', $param);
+    }
+
+    // Prepare and execute the SQL statement with optional parameters.
+    $stmt = $con->prepare($sql);
+    $stmt->execute($param);
+
+    // Check if at least one row was affected (insertion successful).
+    return $stmt->rowCount() > 0;
+
+
+}
+

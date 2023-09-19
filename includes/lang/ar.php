@@ -249,6 +249,7 @@ function lang($phrase)
     'publish_success'                     => 'تم حفظ دار النشر بنجاح',
     'publish_error'                       => 'حدث خطأ الرجاء المحاولة مرة اخرى',
     'publish_edit_success'                => 'تم تعديل دار النشر بنجاح',
+    'book_edit_success'                   => 'تم تعديل الكتاب بنجاح',
     '' => '',
     //edit publisher
     'edit_publisher'  => 'تعديل دار نشر',

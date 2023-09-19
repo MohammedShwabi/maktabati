@@ -8,6 +8,11 @@ echo '<br><br><br><br><br>';
 if (!isset($_SESSION['UserEmail'])) {
     redirect_user();
 }
+
+//message
+$statusMsg = "";
+$msgContainer = "d-none";
+
 // File upload path
 $upload_dir = "upload/books/";
 
@@ -15,129 +20,61 @@ $upload_dir = "upload/books/";
 $insert_status = -1;
 $uploadImgStatus = -1;
 
-//check if method is post 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    global $con;
-    try {
-        //start transaction
-        $con->beginTransaction();
-        //check from all list
-        if (
-            !isset($_POST['category']) || !isset($_POST['author_name']) || !isset($_POST['work_on_book'])
-            || !isset($_POST['publisher']) || !isset($_POST['language'])
-        ) {
-            throw new ErrorException(lang('still_one_choses_empty'));
-        }
+    $book_id = filter_var($_POST['book_id'], FILTER_VALIDATE_INT);
 
-        // // validate profile img
-        // if (
-        //     !empty($_FILES["book_photo"]["name"])
-        // ) {
-        //     // File upload name
-        //     $book_photo = basename($_FILES["book_photo"]["name"]);
+    if ($book_id === false || $book_id === null) {
+        // Handle invalid book ID
+        echo "Invalid book ID";
+        exit;
+    }
+    // here work on img
 
-        //     // File upload path 
-        //     $target_file = $upload_dir . $book_photo;
 
-        //     //check if the file name is not repeated
-        //     if (!file_exists($target_file)) {
-        //         //allowed file extension
-        //         $allow_types = array('png', 'jpeg', 'jpg');
-        //         // get uploaded file's extension
-        //         $file_extension = strtolower(pathinfo($book_photo, PATHINFO_EXTENSION));
-        //         // Check whether file type is valid  
-        //         if (in_array($file_extension, $allow_types)) {
-        //             // Upload file to server  
-        //             if (move_uploaded_file($_FILES["book_photo"]["tmp_name"], $target_file)) {
-        //                 $uploadImgStatus = 1;
-        //             } else {
-        //                 throw new ErrorException(lang('author_error_uploading'));
-        //             }
-        //         } else {
-        //             throw new ErrorException(lang('not_allowed') . join(", ", $allow_types));
-        //         }
-        //     }
-        //     else{
-        //         $uploadImgStatus = 1;
-        //     } 
-        // }
+    $book_photo = "test.png";
+    // validate post param
+    $book_title           = filter_var(strip_tags($_POST['book_title']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $book_sub_title       = filter_var(strip_tags($_POST['book_sub_title']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $book_description     = filter_var(strip_tags($_POST['book_description']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $category             = filter_var(strip_tags($_POST['category']), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+    $dewyNo               = filter_var(strip_tags($_POST['dewyNo']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $author_name          = filter_var(strip_tags($_POST['author_name']), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+    $work_id              = filter_var(strip_tags($_POST['work_on_book']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $publisher            = filter_var(strip_tags($_POST['publisher']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $publish_place        = filter_var(strip_tags($_POST['publish_place']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $language             = filter_var(strip_tags($_POST['language']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $isbn                 = filter_var(strip_tags($_POST['isbn']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
+    $depository_no        = filter_var(strip_tags($_POST['depository_no']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE) ?? NULL;
 
-        // validate post param
-        $book_title           = filter_var(strip_tags($_POST['book_title']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $book_sub_title       = filter_var(strip_tags($_POST['book_sub_title']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $book_description     = filter_var(strip_tags($_POST['book_description']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $category             = filter_var(strip_tags($_POST['category']), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-        $dewyNo               = filter_var(strip_tags($_POST['dewyNo']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $author_name            = filter_var(strip_tags($_POST['author_name']), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-        $work_id              = filter_var(strip_tags($_POST['work_on_book']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $publisher            = filter_var(strip_tags($_POST['publisher']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $publish_place        = filter_var(strip_tags($_POST['publish_place']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $language             = filter_var(strip_tags($_POST['language']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $isbn                 = filter_var(strip_tags($_POST['isbn']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
-        $depository_no        = filter_var(strip_tags($_POST['depository_no']), FILTER_SANITIZE_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE) ?? NULL;
+    // UPDATE_BOOK_INFO
+    $result = update_book(UPDATE_BOOK_INFO, [$book_title, $book_sub_title, $book_description, $depository_no, $isbn, $dewyNo, 3, $publish_place, $category, $book_id]);
+    $work_on_book = "";
+    switch ($work_id) {
+        case 1:
+            $work_on_book = lang('authoring');
+            break;
+        case 2:
+            $work_on_book = lang('translate');
+            break;
+        case 3:
+            $work_on_book = lang('checking');
+            break;
+        default:
+            $work_on_book = lang('reviewing');
+            break;
+    }
+    // UPDATE_BOOK_AUTHOR_INFO
+    $result2 = update_book(UPDATE_BOOK_AUTHOR_INFO, [$work_on_book, $work_id, $author_name, $book_id]);
+    // UPDATE_BOOK_PUBLISHER_INFO
+    $result3 = update_book(UPDATE_BOOK_PUBLISHER_INFO, [$publisher, $book_id]);
+    // UPDATE_BOOK_LANG_INFO
+    $result4 = update_book(UPDATE_BOOK_LANG_INFO, [$language, $book_id]);
 
-        //check all required field 
-        if (
-            $uploadImgStatus != 1 ||
-            empty($book_title) || empty($book_sub_title) || empty($book_description) || empty($category) || empty($dewyNo)  || empty($author_id)
-            || empty($work_id) || empty($publish_place) || empty($language)
-        ) {
-            throw new ErrorException(lang('login_empty'));
-        } else {
-            //insert into book table
-            $sql_insert_book = insert_data(UPDATE_BOOK_INFO, [$book_title, $book_sub_title, $book_photo, $book_description, $depository_no, $isbn, $dewyNo, 3, $publish_place, $category]);
-
-            //to get last id of book table to use it more than once
-            $get_last_id = get_data("Select max(book_id) from book");
-            $book_id = $get_last_id['max(book_id)'];
-
-            //to insert work on book
-            $work_on_book = "";
-            switch ($work_id) {
-                case 1:
-                    $work_on_book = lang('authoring');
-                    break;
-                case 2:
-                    $work_on_book = lang('translate');
-                    break;
-                case 3:
-                    $work_on_book = lang('checking');
-                    break;
-                default:
-                    $work_on_book = lang('reviewing');
-                    break;
-            }
-
-            //insert into book_author_rel table
-            // $sql_insert_book_author_rel =  insert_data(INSERT_BOOK_AUTHOR_REL, [$work_on_book, $work_id, $book_id, $author_id]);
-
-            //insert into book_lang_rel table
-            // $sql_insert_book_lang_rel = insert_data(INSERT_BOOK_LANG_REL, [$language, $book_id]);
-
-            //insert into book_pub_rel table
-            // $sql_insert_book_pub_rel = insert_data(INSERT_BOOK_PUB_REL, [$book_id, $publisher]);
-
-           
-
-        }
-
-        //commit all queries
-        $con->commit();
-
-        //print success message
-        $statusMsg = lang("add_book_success");
-        $msgContainer = "alert-success";
-
-        redirect_user(lang('publish_edit_success'), 5, "publishers.php", "info");
-
-    } catch (ErrorException $e) {
-        //rollback if any error happened  with custom error msg
-        $con->rollBack();
-        $msgContainer = "alert-danger";
-        $statusMsg = $e->getMessage();
-    } catch (Exception $e) {
-        //rollback if any error happened 
-        $con->rollBack();
+    if ($result) {
+        // Book updated successfully
+        redirect_user(lang('book_edit_success'), 5, "index.php", "info");
+    } else {
+        // Handle the update failure
         $msgContainer = "alert-danger";
         $statusMsg = lang("unexpected_error");
     }
@@ -150,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
     $book_id = filter_input(INPUT_GET, 'book', FILTER_VALIDATE_INT);
 }
-// echo $book_id;
+echo $book_id;
 
-$row = get_data(SELECT_BOOK_UPDATE, [1]);
+$row = get_data(SELECT_BOOK_UPDATE, [$book_id]);
 if (count($row) > 0) {
-    var_dump($row);
+    // var_dump($row);
 ?>
     <h1>his </h1>
     <!-- edit book section -->
@@ -171,23 +108,23 @@ if (count($row) > 0) {
         </div>
 
         <!-- message that display after submit is made -->
-        <!-- <div class="alert <?= $msgContainer ?> alert-dismissible fade show mx-5" role="alert">
-        <p class='fw-bold'><?= $statusMsg ?></p>
-        <?php
-        // redirect user if add author success
-        if ($msgContainer == "alert-success") {
-            echo ('<p class="fs-6">' . lang('redirect_after') . '<span id="second"></span>' . lang('second') . '</p>');
-            echo ("
+        <div class="alert <?= $msgContainer ?> alert-dismissible fade show mx-5" role="alert">
+            <p class='fw-bold'><?= $statusMsg ?></p>
+            <?php
+            // redirect user if add author success
+            if ($msgContainer == "alert-success") {
+                echo ('<p class="fs-6">' . lang('redirect_after') . '<span id="second"></span>' . lang('second') . '</p>');
+                echo ("
             <script>
                 var second = 5;
                 $('#second').text(second);
                 var redirectTime = setInterval(myTimer, 1000, 'index.php');
             </script>
         ");
-        }
-        ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div> -->
+            }
+            ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
         <form name="add_book" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
             <input class="form-control" type="hidden" id="book_id" name="book_id" value="<?php echo $row['book_id'] ?>" />
@@ -198,13 +135,13 @@ if (count($row) > 0) {
                 <div class="text-center mt-3 mb-5">
                     <label for="book_photo" class="profile-upload">
                         <div class="profile-container">
-                            <img src="upload/books/<?= $row['photo'] ?>"alt="author image" id="profile_img">
+                            <img src="upload/books/<?= $row['photo'] ?>" alt="author image" id="profile_img">
                         </div>
                         <div class="camera-icon d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-camera-circle"></i>
                         </div>
                     </label>
-                    <input type="file" name="book_photo" id="book_photo" onchange="checkFileExist(this, 'books')" hidden accept="image/png, image/jpeg">
+                    <input type="file" name="book_photo" id="book_photo" hidden accept="image/png, image/jpeg">
                     <div class="invalid-feedback"></div>
                 </div>
 
@@ -222,7 +159,7 @@ if (count($row) > 0) {
                     <div class="col-md-6">
                         <div class="mt-3 text-end">
                             <label for="book_sub_title" class="blue-text mb-2 me-4"><?= lang('book_sub_title'); ?></label>
-                            <input value="<?php echo $row['subtitle'] ?>" class="form-control" type="text" id="book_sub_title" name="book_sub_title" placeholder="<?php echo lang('book_sub_title_place') ?>" autocomplete="off" required />
+                            <input value="<?php echo $row['subtitle'] . 'lll' ?>" class="form-control" type="text" id="book_sub_title" name="book_sub_title" placeholder="<?php echo lang('book_sub_title_place') ?>" autocomplete="off" required />
 
                         </div>
                     </div>
@@ -279,7 +216,7 @@ if (count($row) > 0) {
                                 $authors = get_all_data("select * from author");
                                 foreach ($authors as $author) {
                                     echo '<option value="' . $author['author_id'] . '"';
-                                    if ($row['cat_id'] == $author['author_id']) {
+                                    if ($row['author_id'] == $author['author_id']) {
                                         echo  'selected';
                                     }
                                     echo '>' . $author['author_name'] . '</option>';
